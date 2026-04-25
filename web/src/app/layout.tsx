@@ -26,8 +26,10 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const siteUrl = process.env.URL ?? "https://getpaxr.com";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://getpaxr.com"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Paxr — Your AI Warranty Agent | Peace, handled.",
     template: "%s | Paxr",
