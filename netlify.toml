@@ -1,8 +1,10 @@
 [build]
   base = "web"
   command = "pnpm build"
-  publish = ".next"
 
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
   PNPM_VERSION = "8.15.1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
