@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Paxr — Website Update Instructions (SK-00b)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900&family=DM+Sans:wght@400;500&family=Courier+Prime:wght@400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--deep:#0E1B29;--jade:#3EC99A;--jade-dim:#2D9A76;--stone:#F6F5F1;--pale:#EAE9E4;--mist:#8FA3B1;--f-h:'Fraunces',serif;--f-b:'DM Sans',sans-serif;--f-m:'Courier Prime',monospace;}
+body{background:#fff;color:var(--deep);font-family:var(--f-b);font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+/* TOP BAR */
+.topbar{background:var(--deep);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100;}
+.tb-logo{font-family:var(--f-h);font-size:18px;font-weight:900;color:var(--stone);letter-spacing:0.06em;}
+.tb-logo span{color:var(--jade);}
+.tb-tag{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(246,245,241,0.45);}
+.tb-badge{background:rgba(232,160,32,0.25);color:#FCD34D;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:4px;}
+
+/* LAYOUT */
+.wrap{max-width:880px;margin:0 auto;padding:40px 40px 80px;}
+
+/* INTRO */
+.intro{background:var(--stone);border:1px solid var(--pale);border-radius:8px;padding:24px 28px;margin-bottom:40px;}
+.intro-title{font-family:var(--f-h);font-size:22px;font-weight:600;color:var(--deep);margin-bottom:8px;}
+.intro-sub{font-size:13px;color:var(--mist);line-height:1.65;max-width:600px;}
+
+/* RULE BOX */
+.rules{background:rgba(14,27,41,0.04);border-radius:6px;padding:16px 20px;margin-bottom:32px;}
+.rule-title{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;}
+.rule{display:flex;gap:10px;font-size:13px;color:var(--deep);padding:5px 0;border-bottom:1px solid var(--pale);}
+.rule:last-child{border-bottom:none;}
+.rule-icon{flex-shrink:0;color:var(--jade-dim);font-size:12px;margin-top:1px;}
+
+/* PAGE BLOCK */
+.page{margin-bottom:48px;}
+.page-head{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.page-badge{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;background:var(--deep);color:var(--stone);padding:4px 10px;border-radius:4px;}
+.page-route{font-family:var(--f-m);font-size:12px;color:var(--mist);}
+.page-title{font-family:var(--f-h);font-size:22px;font-weight:600;color:var(--deep);margin-bottom:4px;}
+.page-desc{font-size:13px;color:var(--mist);margin-bottom:20px;}
+
+/* CHANGE BLOCK */
+.change{background:#fff;border:1px solid var(--pale);border-radius:8px;margin-bottom:14px;overflow:hidden;}
+.change-head{padding:12px 18px;background:var(--stone);border-bottom:1px solid var(--pale);display:flex;align-items:center;gap:10px;}
+.change-type{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;padding:2px 8px;border-radius:3px;font-weight:500;flex-shrink:0;}
+.change-type.add{background:rgba(62,201,154,0.12);color:var(--jade-dim);}
+.change-type.replace{background:rgba(232,160,32,0.1);color:#B8800A;}
+.change-type.append{background:rgba(37,99,235,0.1);color:#1D4ED8;}
+.change-name{font-size:13px;font-weight:500;color:var(--deep);}
+.change-loc{font-family:var(--f-m);font-size:11px;color:var(--mist);margin-left:auto;}
+.change-body{padding:16px 18px;}
+
+/* CONTENT ROWS */
+.row{border-bottom:1px solid var(--pale);display:grid;grid-template-columns:130px 1fr;font-size:13px;}
+.row:last-child{border-bottom:none;}
+.row-label{font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--mist);padding:9px 10px;background:var(--stone);border-right:1px solid var(--pale);}
+.row-val{padding:9px 14px;color:var(--deep);line-height:1.6;}
+.row-val.hl{font-family:var(--f-h);font-size:17px;font-weight:600;}
+.row-val.muted{color:var(--mist);}
+.row-val.mono{font-family:var(--f-m);}
+
+/* BEFORE / AFTER */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+.ba-side{border-radius:6px;padding:14px 16px;}
+.ba-side.before{background:rgba(192,57,43,0.05);border:1px solid rgba(192,57,43,0.15);}
+.ba-side.after{background:rgba(62,201,154,0.06);border:1px solid rgba(62,201,154,0.2);}
+.ba-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.ba-side.before .ba-label{color:#C0392B;}
+.ba-side.after .ba-label{color:var(--jade-dim);}
+.ba-content{font-size:13px;color:var(--deep);line-height:1.6;}
+.ba-content.hl{font-family:var(--f-h);font-size:15px;font-weight:600;}
+
+/* FULL SECTION PREVIEW */
+.section-preview{background:var(--stone);border:1px solid var(--pale);border-radius:6px;padding:20px 24px;margin:12px 0;}
+.sp-eyebrow{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mist);margin-bottom:8px;}
+.sp-title{font-family:var(--f-h);font-size:22px;font-weight:600;color:var(--deep);margin-bottom:10px;letter-spacing:-0.01em;}
+.sp-body{font-size:13px;color:#4A5E6E;line-height:1.7;max-width:560px;margin-bottom:16px;}
+.sp-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+.sp-card{background:#fff;border:1px solid var(--pale);border-radius:6px;padding:14px;}
+.sp-card-title{font-size:13px;font-weight:500;color:var(--deep);margin-bottom:4px;}
+.sp-card-body{font-size:12px;color:#4A5E6E;line-height:1.55;}
+
+/* CTA */
+.cta{display:inline-block;background:var(--jade);color:var(--deep);padding:8px 18px;border-radius:5px;font-size:13px;font-weight:500;margin-top:8px;}
+.cta-ghost{display:inline-block;border:1.5px solid rgba(14,27,41,0.2);color:var(--deep);padding:7px 18px;border-radius:5px;font-size:13px;margin-top:8px;}
+
+/* NOTE */
+.note{background:rgba(14,27,41,0.04);border-left:3px solid var(--mist);padding:10px 14px;border-radius:0 5px 5px 0;margin:10px 0;font-size:12px;color:var(--deep);line-height:1.6;}
+.note strong{font-weight:500;}
+
+/* SEO */
+.seo{background:#fff;border:1px solid var(--pale);border-radius:6px;padding:14px 16px;margin:12px 0;}
+.seo-old{font-size:12px;color:#C0392B;text-decoration:line-through;margin-bottom:6px;}
+.seo-new{font-size:13px;color:var(--deep);}
+.seo-label{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--mist);margin-bottom:4px;}
+
+@media(max-width:640px){
+  .wrap{padding:20px 20px 60px;}
+  .ba,.sp-cards{grid-template-columns:1fr;}
+  .row{grid-template-columns:1fr;}
+  .row-label{border-right:none;border-bottom:1px solid var(--pale);}
+  .topbar{padding:0 20px;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-logo">pax<span>r</span> <span style="font-family:var(--f-b);font-size:11px;font-weight:400;opacity:0.4;letter-spacing:0.08em;">Website Update</span></div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <span class="tb-tag">Skill SK-00b</span>
+    <span class="tb-badge">Targeted updates only — do not rebuild</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- INTRO -->
+  <div class="intro">
+    <div class="intro-title">Website update instructions for Claude Code</div>
+    <div class="intro-sub">These are surgical changes to the existing getpaxr.com site — not a rebuild. Three additions from the founder session with Marv. Every change is described precisely: what to replace, what to add, and where.</div>
+  </div>
+
+  <!-- RULES -->
+  <div class="rules">
+    <div class="rule-title">Rules for this skill</div>
+    <div class="rule"><div class="rule-icon">✓</div>Make only the changes described in this file. Nothing else.</div>
+    <div class="rule"><div class="rule-icon">✓</div>Do not remove any existing copy unless explicitly marked "REPLACE THIS".</div>
+    <div class="rule"><div class="rule-icon">✓</div>New copy must match this file exactly — word for word.</div>
+    <div class="rule"><div class="rule-icon">✓</div>After every change, run <span style="font-family:var(--f-m);font-size:11px;">pnpm typecheck</span> to confirm no regressions.</div>
+    <div class="rule"><div class="rule-icon">✓</div>Run <span style="font-family:var(--f-m);font-size:11px;">pnpm build --filter=web</span> when all changes are complete.</div>
+    <div class="rule"><div class="rule-icon">✗</div>Do not update AGENT.md, SKILLS.md, or LOOP.md — those are already updated.</div>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+       CHANGE 1 — HOME PAGE
+  ═════════════════════════════════════════ -->
+
+  <div class="page">
+    <div class="page-head">
+      <span class="page-badge">Change 1 of 4</span>
+      <span class="page-route">apps/web/app/page.tsx</span>
+    </div>
+    <div class="page-title">Home page — two updates</div>
+    <div class="page-desc">Add Feature 7 to the features grid. Update the For Brands teaser copy.</div>
+
+    <!-- CHANGE 1A -->
+    <div class="change">
+      <div class="change-head">
+        <span class="change-type add">Add</span>
+        <span class="change-name">Feature 7 — "Ask your manual" card</span>
+        <span class="change-loc">Features grid section</span>
+      </div>
+      <div class="change-body">
+        <p style="font-size:13px;color:var(--mist);margin-bottom:12px;">The Features section currently has 6 feature cards. Add this as card #7, after "Receipt and document storage."</p>
+        <div style="border:1px solid var(--pale);border-radius:6px;overflow:hidden;">
+          <div class="row"><div class="row-label">Feature title</div><div class="row-val">Ask your product manual anything</div></div>
+          <div class="row"><div class="row-label">Feature body</div><div class="row-val">Every product manual, fully searchable. Ask Paxr how to install it, set a programme, or troubleshoot a problem — and get the answer instantly, referenced back to the exact page.</div></div>
+          <div class="row"><div class="row-label">Pro badge</div><div class="row-val muted">Pro only <em>small badge in top-right of card</em></div></div>
+        </div>
+        <div class="note"><strong>Design:</strong> Same card style as existing 6 features. Add a small "Pro" badge (tag style, jade colour) to indicate this feature requires Pro. No other card has this badge — this is the only Pro-gated feature in the grid.</div>
+      </div>
+    </div>
+
+    <!-- CHANGE 1B -->
+    <div class="change">
+      <div class="change-head">
+        <span class="change-type replace">Replace</span>
+        <span class="change-name">For Brands teaser — headline and body</span>
+        <span class="change-loc">For Brands teaser section (dark bg strip near bottom of home page)</span>
+      </div>
+      <div class="change-body">
+        <div class="ba">
+          <div class="ba-side before">
+            <div class="ba-label">Current headline (remove this)</div>
+            <div class="ba-content hl">Your customers don't register warranties. We fix that.</div>
+          </div>
+          <div class="ba-side after">
+            <div class="ba-label">New headline (replace with this)</div>
+            <div class="ba-content hl">Your partner in the product lifecycle.</div>
+          </div>
+        </div>
+        <div class="ba">
+          <div class="ba-side before">
+            <div class="ba-label">Current body (remove this)</div>
+            <div class="ba-content">Add a Paxr QR code to your packaging. Your customers register instantly — no portals, no friction. You get registration data, renewal revenue, and product lifecycle intelligence you've never had before.</div>
+          </div>
+          <div class="ba-side after">
+            <div class="ba-label">New body (replace with this)</div>
+            <div class="ba-content">From first scan to next purchase — Paxr manages the entire customer ownership journey on your behalf. Registration data, renewal revenue, usage intelligence, and a built-in research panel of verified product owners ready for your next launch.</div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--pale);border-radius:6px;overflow:hidden;margin-top:12px;">
+          <div class="row"><div class="row-label">CTA text</div><div class="row-val">Learn about brand partnerships <em>unchanged — keep as is</em></div></div>
+          <div class="row"><div class="row-label">CTA link</div><div class="row-val muted">/brands — unchanged</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+       CHANGE 2 — HOW IT WORKS PAGE
+  ═════════════════════════════════════════ -->
+
+  <div class="page">
+    <div class="page-head">
+      <span class="page-badge">Change 2 of 4</span>
+      <span class="page-route">apps/web/app/how-it-works/page.tsx</span>
+    </div>
+    <div class="page-title">How it works — add new section</div>
+    <div class="page-desc">Add a new section after the existing "The vault" section (section 3). This is a full new section, not an edit to existing content.</div>
+
+    <div class="change">
+      <div class="change-head">
+        <span class="change-type append">Append section</span>
+        <span class="change-name">New section: "Your product companion"</span>
+        <span class="change-loc">After "The vault" section · Before "Making a claim" section</span>
+      </div>
+      <div class="change-body">
+        <p style="font-size:13px;color:var(--mist);margin-bottom:14px;">Full section — insert after the vault section. Use the same section layout pattern as the existing sections on this page.</p>
+        <div class="section-preview">
+          <div class="sp-eyebrow">Your product companion</div>
+          <div class="sp-title">More than warranties. Your entire product, answered.</div>
+          <div class="sp-body">Paxr doesn't stop at warranty management. Once your product is in the vault, Paxr becomes your companion for everything that comes with owning it — from setting it up to troubleshooting problems years later.</div>
+          <div class="sp-cards">
+            <div class="sp-card">
+              <div class="sp-card-title">Ask your manual — instantly</div>
+              <div class="sp-card-body">Every product comes with a manual nobody reads. Paxr reads it for you. Ask any question — "how do I set the eco programme?" or "how often should I clean the filter?" — and get an immediate answer referenced back to the page.</div>
+            </div>
+            <div class="sp-card">
+              <div class="sp-card-title">Installation help</div>
+              <div class="sp-card-body">Just bought something that needs setting up? Message Paxr. It walks you through the installation or setup process step by step, in plain language, based on your exact product and model.</div>
+            </div>
+            <div class="sp-card">
+              <div class="sp-card-title">Available on WhatsApp</div>
+              <div class="sp-card-body">Every question goes through WhatsApp — no app to open. "How do I reset the child lock on my washing machine?" Three replies later, it's sorted.</div>
+            </div>
+            <div class="sp-card">
+              <div class="sp-card-title">From day one to claim day</div>
+              <div class="sp-card-body">Paxr is with you from the moment you scan the box — through setup, daily use, and if something ever goes wrong — all the way through to a warranty claim and renewal.</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--mist);margin-top:8px;font-style:italic;">Available on Paxr Pro.</div>
+          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+            <span class="cta">Start for free</span>
+            <span class="cta-ghost">See pricing</span>
+          </div>
+        </div>
+        <div class="note"><strong>Step numbering:</strong> This is a new section between existing sections — it does not need a step number (it's a feature callout, not a numbered step). Use the same visual treatment as any non-numbered section on the page.</div>
+        <div class="note"><strong>CTA links:</strong> "Start for free" → /sign-up &nbsp;·&nbsp; "See pricing" → /pricing</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+       CHANGE 3 — FOR BRANDS PAGE
+  ═════════════════════════════════════════ -->
+
+  <div class="page">
+    <div class="page-head">
+      <span class="page-badge">Change 3 of 4</span>
+      <span class="page-route">apps/web/app/brands/page.tsx</span>
+    </div>
+    <div class="page-title">For brands page — four updates</div>
+    <div class="page-desc">Hero headline, problem stats, two new value props, and a full new "Lifecycle" section.</div>
+
+    <!-- CHANGE 3A -->
+    <div class="change">
+      <div class="change-head">
+        <span class="change-type replace">Replace</span>
+        <span class="change-name">Hero headline</span>
+        <span class="change-loc">Hero section — dark background at top of /brands</span>
+      </div>
+      <div class="change-body">
+        <div class="ba">
+          <div class="ba-side before">
+            <div class="ba-label">Current (remove this)</div>
+            <div class="ba-content hl">Your customers don't register warranties. We fix that.</div>
+          </div>
+          <div class="ba-side after">
+            <div class="ba-label">New (replace with this)</div>
+            <div class="ba-content hl">Your partner in the product lifecycle.</div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--pale);border-radius:6px;overflow:hidden;margin-top:12px;">
+          <div class="row"><div class="row-label">Subheadline</div><div class="row-val">Keep existing subheadline unchanged — do not edit it.</div></div>
+          <div class="row"><div class="row-label">CTAs</div><div class="row-val muted">Keep existing CTAs unchanged.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHANGE 3B -->
+    <div class="change">
+      <div class="change-head">
+        <span class="change-type append">Append stat</span>
+        <span class="change-name">Third stat in the problem section</span>
+        <span class="change-loc">Problem section — stat row (currently has 2 stats)</span>
+      </div>
+      <div class="change-body">
+        <p style="font-size:13px;color:var(--mist);margin-bottom:12px;">The problem section currently has two stats (registration rate + market size). Add a third stat in the same style.</p>
+        <div style="border:1px solid var(--pale);border-radius:6px;overflow:hidden;">
+          <div class="row"><div class="row-label">Stat value</div><div class="row-val"><strong>88%</strong></div></div>
+          <div class="row"><div class="row-label">Stat label</div><div class="row-val">of sold products invisible to you post-sale — no ownership data, no lifecycle intelligence, no renewal relationship.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHANGE 3C -->
+    <div class="change">
+      <div class="change-head">
+        <span class="change-type append">Append cards</span>
+        <span class="change-name">Two new value proposition cards</span>
+        <span class="change-loc">Value props section — "What you get" (currently has 4 cards)</span>
+      </div>
+      <div class="change-body">
+        <p style="font-size:13px;color:var(--mist);margin-bottom:12px;">The value props section currently has 4 cards. Add these two at the end, in the same card style.</p>
+        <div style="border:1px solid var(--pale);border-radius:6px;overflow:hidden;margin-bottom:10px;">
+          <div class="row"><div class="row-label">Card 5 title</div><div class="row-val">Product lifecycle intelligence</div></div>
+          <div class="row"><div class="row-label">Card 5 body</div><div class="row-val">Know who owns your products, how long they've had them, and what stage of the ownership lifecycle they're in. See usage patterns by product, region, and ownership duration — in aggregate and in real time.</div></div>
+        </div>
+        <div style="border:1px solid var(--pale);border-radius:6px;overflow:hidden;">
+          <div class="row"><div class="row-label">Card 6 title</div><div class="row-val">A research panel, ready for your next launch</div></div>
+          <div class="row"><div class="row-label">Card 6 body</div><div class="row-val">Your registered Paxr customers are opt-in, verified product owners. When you need feedback on a new product or want to test a feature before launch, Paxr gives you instant access to your most engaged customers — already trained, already engaged.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHANGE 3D -->
+    <div class="change">
+      <div class="change-head">
+        <span class="change-type add">Add full section</span>
+        <span class="change-name">New section: "Your partner in the product lifecycle"</span>
+        <span class="change-loc">After "What you get" section · Before the contact form section</span>
+      </div>
+      <div class="change-body">
+        <p style="font-size:13px;color:var(--mist);margin-bottom:14px;">Insert this as a full section before the contact/CTA section at the bottom of the brands page.</p>
+        <div class="section-preview">
+          <div class="sp-eyebrow">The full picture</div>
+          <div class="sp-title">From first scan to next purchase.</div>
+          <div class="sp-body">The warranty is how Paxr enters the relationship. What happens after is where the real value is.</div>
+          <div style="margin:14px 0;display:grid;gap:10px;">
+            <div style="background:#fff;border:1px solid var(--pale);border-radius:6px;padding:16px;display:flex;gap:16px;align-items:flex-start;">
+              <div style="font-family:var(--f-m);font-size:12px;color:var(--mist);flex-shrink:0;padding-top:2px;">01</div>
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--deep);margin-bottom:4px;">Customer scans your QR code</div>
+                <div style="font-size:12px;color:#4A5E6E;line-height:1.55;">Their warranty is registered in under 20 seconds. No portal. No friction. You see the registration in your partner dashboard instantly.</div>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--pale);border-radius:6px;padding:16px;display:flex;gap:16px;align-items:flex-start;">
+              <div style="font-family:var(--f-m);font-size:12px;color:var(--mist);flex-shrink:0;padding-top:2px;">02</div>
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--deep);margin-bottom:4px;">Paxr becomes their product companion</div>
+                <div style="font-size:12px;color:#4A5E6E;line-height:1.55;">They ask questions. Paxr answers from your manual. They set it up correctly. They use it longer. They trust your brand more.</div>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--pale);border-radius:6px;padding:16px;display:flex;gap:16px;align-items:flex-start;">
+              <div style="font-family:var(--f-m);font-size:12px;color:var(--mist);flex-shrink:0;padding-top:2px;">03</div>
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--deep);margin-bottom:4px;">Warranty expires — renewal handled on your behalf</div>
+                <div style="font-size:12px;color:#4A5E6E;line-height:1.55;">Paxr sends a renewal prompt via WhatsApp. Customer replies YES. Renewal completed. Revenue to you. All automated.</div>
+              </div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--pale);border-radius:6px;padding:16px;display:flex;gap:16px;align-items:flex-start;">
+              <div style="font-family:var(--f-m);font-size:12px;color:var(--mist);flex-shrink:0;padding-top:2px;">04</div>
+              <div>
+                <div style="font-size:13px;font-weight:500;color:var(--deep);margin-bottom:4px;">You want to launch something new</div>
+                <div style="font-size:12px;color:#4A5E6E;line-height:1.55;">Access a verified panel of your most engaged customers — people who own your products, opted in to give you feedback. Test a new product. Get 1,000 real responses. Ship something better.</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:16px;background:rgba(14,27,41,0.04);border-radius:6px;padding:14px 18px;">
+            <div style="font-family:var(--f-h);font-style:italic;font-size:16px;font-weight:300;color:var(--deep);">"We are your effective partner in product lifecycle management. We know who owns your product. We can connect them to you."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+       CHANGE 4 — PRICING PAGE
+  ═════════════════════════════════════════ -->
+
+  <div class="page">
+    <div class="page-head">
+      <span class="page-badge">Change 4 of 4</span>
+      <span class="page-route">apps/web/app/pricing/page.tsx</span>
+    </div>
+    <div class="page-title">Pricing page — update Pro plan features</div>
+    <div class="page-desc">Add two features to the Pro plan feature list. Update the feature comparison table.</div>
+
+    <div class="change">
+      <div class="change-head">
+        <span class="change-type append">Append features</span>
+        <span class="change-name">Two new Pro features in plan card + comparison table</span>
+        <span class="change-loc">Pro plan card + feature comparison table</span>
+      </div>
+      <div class="change-body">
+        <p style="font-size:13px;color:var(--mist);margin-bottom:12px;">In the Pro plan feature list, add these two new items. Add them after "Claim guidance" and before "Receipt &amp; document storage."</p>
+        <div style="border:1px solid var(--pale);border-radius:6px;overflow:hidden;margin-bottom:12px;">
+          <div class="row"><div class="row-label">New feature 1</div><div class="row-val">Ask your product manual anything</div></div>
+          <div class="row"><div class="row-label">New feature 2</div><div class="row-val">Installation and setup guidance</div></div>
+        </div>
+
+        <p style="font-size:13px;color:var(--mist);margin-bottom:10px;">In the feature comparison table (if present), add rows for both features:</p>
+        <div style="border:1px solid var(--pale);border-radius:6px;overflow:hidden;">
+          <div class="row"><div class="row-label">Table row 1</div><div class="row-val mono">Ask your product manual anything &nbsp;|&nbsp; — &nbsp;|&nbsp; ✓</div></div>
+          <div class="row"><div class="row-label">Table row 2</div><div class="row-val mono">Installation and setup guidance &nbsp;|&nbsp; — &nbsp;|&nbsp; ✓</div></div>
+          <div class="row"><div class="row-label">Position</div><div class="row-val muted">After the "Claim guidance" row</div></div>
+        </div>
+
+        <div class="note" style="margin-top:12px;"><strong>FAQ addition:</strong> Add this new FAQ entry to the Pricing page FAQ section, after the existing questions.</div>
+        <div style="border:1px solid var(--pale);border-radius:6px;overflow:hidden;margin-top:8px;">
+          <div class="row"><div class="row-label">Q</div><div class="row-val">What is the digital manual feature?</div></div>
+          <div class="row"><div class="row-label">A</div><div class="row-val">On Paxr Pro, every product in your vault comes with its manual available to query. Ask Paxr any question about your product — how to install it, how to set a programme, how to troubleshoot a problem — and Paxr gives you an instant answer from the exact page of your product manual. Available on WhatsApp or in the Paxr app.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+       SEO UPDATES
+  ═════════════════════════════════════════ -->
+
+  <div class="page">
+    <div class="page-head">
+      <span class="page-badge">SEO</span>
+      <span class="page-route">All updated pages</span>
+    </div>
+    <div class="page-title">Meta description updates</div>
+    <div class="page-desc">Update these meta descriptions to reflect the new positioning. Titles can stay as-is.</div>
+
+    <div class="seo">
+      <div class="seo-label">/brands — meta description</div>
+      <div class="seo-old">Add a Paxr QR code to your packaging. Your customers register instantly — no portals, no friction. You get registration data, renewal revenue, and product lifecycle intelligence.</div>
+      <div class="seo-new">Paxr is your partner in the product lifecycle — from first scan to next launch. Registration data, renewal revenue, usage intelligence, and a built-in research panel of verified owners ready for your next product.</div>
+    </div>
+
+    <div class="seo">
+      <div class="seo-label">/how-it-works — meta description</div>
+      <div class="seo-old">Scan a QR code, add manually, or photograph your receipt. Paxr registers your warranty, monitors it, and handles renewals on WhatsApp. See how it works.</div>
+      <div class="seo-new">Scan a QR code. Paxr registers your warranty, answers product manual questions, monitors expiry, and handles renewals on WhatsApp. See how it works.</div>
+    </div>
+
+    <div class="seo">
+      <div class="seo-label">/pricing — meta description (keep existing — no change needed)</div>
+      <div class="seo-new">No change required — existing description still accurate.</div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════
+       VERIFICATION CHECKLIST
+  ═════════════════════════════════════════ -->
+
+  <div style="background:var(--stone);border:1px solid var(--pale);border-radius:8px;padding:24px 28px;margin-top:12px;">
+    <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:14px;">Verification checklist — run after all changes</div>
+    <div style="display:grid;gap:6px;font-size:13px;">
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>Home page: features grid has 7 cards (was 6). Feature 7 = "Ask your product manual anything" with Pro badge.</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>Home page: For Brands teaser headline = "Your partner in the product lifecycle."</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>How it works page: new "Your product companion" section visible — 4 cards present.</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>For Brands page: hero headline = "Your partner in the product lifecycle."</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>For Brands page: problem stats section has 3 stats (was 2). Third = "88%".</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>For Brands page: value props section has 6 cards (was 4). New: lifecycle intelligence + research panel.</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>For Brands page: new "From first scan to next purchase" section present with 4 numbered steps.</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>Pricing page: Pro plan feature list includes "Ask your product manual anything" and "Installation and setup guidance".</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>Pricing page: new FAQ question about digital manual present.</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>Meta descriptions updated for /brands and /how-it-works.</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--pale);">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span><span style="font-family:var(--f-m);font-size:11px;">pnpm build --filter=web</span> completes with zero errors.</span>
+      </div>
+      <div style="display:flex;gap:10px;padding:6px 0;">
+        <span style="color:var(--mist);flex-shrink:0;width:16px;">□</span>
+        <span>No existing copy removed except items explicitly marked "remove this" above.</span>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;background:rgba(14,27,41,0.04);border-radius:5px;padding:12px 14px;font-family:var(--f-m);font-size:12px;color:var(--deep);">
+      git commit -m "feat(sk-00b): website update — lifecycle positioning + digital manual feature"
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

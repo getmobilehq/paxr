@@ -1,0 +1,20 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Bundle archives (contents already extracted into the repo)
+*.zip
+
+# Env
+.env
+.env.*
+!.env.example

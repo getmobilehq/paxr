@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Paxr — Website Content Bible</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,300&family=DM+Sans:wght@300;400;500&family=Courier+Prime:wght@400&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --deep:#0E1B29;--jade:#3EC99A;--jade-dim:#2D9A76;
+  --stone:#F6F5F1;--pale:#EAE9E4;--mist:#8FA3B1;
+  --amber:#E8A020;--red:#C0392B;--ink:#243443;
+  --f-h:'Fraunces',serif;--f-b:'DM Sans',sans-serif;--f-m:'Courier Prime',monospace;
+}
+body{background:#fff;color:var(--deep);font-family:var(--f-b);font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+/* TOPBAR */
+.topbar{background:var(--deep);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:200;}
+.tb-logo{font-family:var(--f-h);font-size:20px;font-weight:900;color:var(--stone);letter-spacing:0.06em;}
+.tb-logo span{color:var(--jade);}
+.tb-info{display:flex;gap:20px;flex-wrap:wrap;}
+.tb-tag{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(246,245,241,0.4);}
+.tb-tag strong{color:var(--jade);font-weight:500;}
+
+/* SIDEBAR NAV */
+.layout{display:flex;min-height:100vh;}
+.sidebar{width:220px;flex-shrink:0;background:var(--stone);border-right:1px solid var(--pale);padding:24px 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;}
+.sidebar-section{padding:0 16px 16px;border-bottom:1px solid var(--pale);margin-bottom:12px;}
+.sidebar-section:last-child{border-bottom:none;}
+.sidebar-label{font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist);margin-bottom:8px;padding:0 6px;}
+.sidebar-link{display:block;font-size:12px;color:var(--ink);text-decoration:none;padding:5px 8px;border-radius:4px;line-height:1.3;}
+.sidebar-link:hover{background:var(--pale);color:var(--deep);}
+.sidebar-link.page{font-weight:500;color:var(--deep);}
+.sidebar-link.section{color:var(--mist);padding-left:16px;}
+
+/* MAIN */
+.main{flex:1;min-width:0;padding:0 48px 80px;}
+
+/* PAGE BLOCK */
+.page-block{padding:48px 0;border-bottom:2px solid var(--pale);}
+.page-block:last-child{border-bottom:none;}
+.page-tag{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;}
+.page-name{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;background:var(--deep);color:var(--stone);padding:4px 10px;border-radius:4px;}
+.page-url{font-family:var(--f-m);font-size:11px;color:var(--mist);}
+.page-title{font-family:var(--f-h);font-size:28px;font-weight:600;color:var(--deep);margin-bottom:6px;letter-spacing:-0.01em;}
+.page-desc{font-size:13px;color:var(--mist);margin-bottom:32px;max-width:580px;line-height:1.6;}
+
+/* SECTION BLOCK */
+.sec{background:var(--stone);border:1px solid var(--pale);border-radius:8px;margin-bottom:16px;overflow:hidden;}
+.sec-head{padding:14px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--pale);background:white;}
+.sec-num{font-family:var(--f-m);font-size:10px;color:var(--mist);width:28px;flex-shrink:0;}
+.sec-title{font-size:13px;font-weight:500;color:var(--deep);}
+.sec-component{margin-left:auto;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;background:rgba(62,201,154,0.1);color:var(--jade-dim);padding:2px 8px;border-radius:3px;}
+.sec-body{padding:20px;}
+
+/* CONTENT ROWS */
+.content-row{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--pale);}
+.content-row:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.content-label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--mist);margin-bottom:5px;}
+.content-copy{font-size:14px;color:var(--deep);line-height:1.65;}
+.content-copy.headline{font-family:var(--f-h);font-size:20px;font-weight:600;letter-spacing:-0.01em;}
+.content-copy.sub{font-size:15px;color:var(--ink);}
+.content-copy.body{color:#4A5E6E;}
+.content-copy.cta{display:inline-block;background:var(--jade);color:var(--deep);padding:10px 20px;border-radius:6px;font-weight:500;font-size:13px;margin-right:8px;margin-top:4px;}
+.content-copy.cta-ghost{display:inline-block;border:1.5px solid rgba(14,27,41,0.2);color:var(--deep);padding:9px 20px;border-radius:6px;font-size:13px;margin-top:4px;}
+.content-copy.cta-text{color:var(--mist);font-size:12px;}
+.content-copy.tag{display:inline-block;background:rgba(14,27,41,0.06);color:var(--mist);padding:3px 8px;border-radius:3px;font-size:11px;letter-spacing:0.08em;margin-right:4px;}
+.content-copy.meta{font-size:12px;color:var(--mist);font-style:italic;}
+
+/* CARDS IN CONTENT */
+.content-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:8px;}
+.content-card{background:white;border:1px solid var(--pale);border-radius:6px;padding:14px;}
+.content-card-title{font-size:12px;font-weight:500;color:var(--deep);margin-bottom:4px;}
+.content-card-body{font-size:12px;color:#4A5E6E;line-height:1.55;}
+
+/* SEO BOX */
+.seo-box{background:white;border:1px solid var(--pale);border-radius:6px;padding:14px 16px;margin-bottom:12px;}
+.seo-label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:6px;}
+.seo-title{font-size:13px;font-weight:500;color:#1A0DAB;margin-bottom:3px;}
+.seo-url{font-size:11px;color:#006621;margin-bottom:3px;}
+.seo-desc{font-size:12px;color:#545454;line-height:1.5;}
+
+/* NOTES */
+.dev-note{background:rgba(14,27,41,0.04);border-left:3px solid var(--mist);padding:10px 14px;border-radius:0 4px 4px 0;margin-top:8px;}
+.dev-note-label{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--mist);margin-bottom:4px;}
+.dev-note-text{font-size:12px;color:var(--ink);line-height:1.55;}
+
+/* NAV SPEC */
+.nav-spec{background:var(--deep);border-radius:6px;padding:14px 18px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:8px;}
+.ns-logo{font-family:var(--f-h);font-size:16px;font-weight:900;color:var(--stone);letter-spacing:0.06em;}
+.ns-logo span{color:var(--jade);}
+.ns-link{font-size:12px;color:rgba(246,245,241,0.55);}
+.ns-cta{font-size:11px;background:var(--jade);color:var(--deep);padding:6px 14px;border-radius:4px;font-weight:500;}
+.ns-sep{flex:1;}
+
+/* FOOTER SPEC */
+.footer-spec{background:var(--deep);border-radius:6px;padding:20px 18px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:20px;flex-wrap:wrap;}
+.fs-col-title{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(246,245,241,0.3);margin-bottom:8px;}
+.fs-col-link{font-size:12px;color:rgba(246,245,241,0.5);display:block;padding:2px 0;line-height:1.5;}
+
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .main{padding:0 20px 60px;}
+  .topbar{padding:14px 20px;}
+  .footer-spec{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-logo">pax<span>r</span></div>
+  <div class="tb-info">
+    <span class="tb-tag">Website Content Bible</span>
+    <span class="tb-tag">Pages <strong>6</strong></span>
+    <span class="tb-tag">Status <strong>Ready for Claude Code</strong></span>
+    <span class="tb-tag">Domain <strong>getpaxr.com</strong></span>
+  </div>
+</div>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Global</div>
+    <a class="sidebar-link page" href="#global-nav">Navigation</a>
+    <a class="sidebar-link page" href="#global-footer">Footer</a>
+    <a class="sidebar-link page" href="#global-seo">SEO defaults</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Pages</div>
+    <a class="sidebar-link page" href="#home">Home</a>
+    <a class="sidebar-link section" href="#home-hero">↳ Hero</a>
+    <a class="sidebar-link section" href="#home-proof">↳ Social proof</a>
+    <a class="sidebar-link section" href="#home-problem">↳ Problem</a>
+    <a class="sidebar-link section" href="#home-how">↳ How it works</a>
+    <a class="sidebar-link section" href="#home-features">↳ Features</a>
+    <a class="sidebar-link section" href="#home-agent">↳ Agent</a>
+    <a class="sidebar-link section" href="#home-pricing">↳ Pricing preview</a>
+    <a class="sidebar-link section" href="#home-brands">↳ For brands</a>
+    <a class="sidebar-link section" href="#home-cta">↳ Final CTA</a>
+  </div>
+  <div class="sidebar-section">
+    <a class="sidebar-link page" href="#how">How it works</a>
+    <a class="sidebar-link section" href="#how-hero">↳ Hero</a>
+    <a class="sidebar-link section" href="#how-scan">↳ Scan journey</a>
+    <a class="sidebar-link section" href="#how-vault">↳ The vault</a>
+    <a class="sidebar-link section" href="#how-agent">↳ The agent</a>
+    <a class="sidebar-link section" href="#how-claims">↳ Claims</a>
+  </div>
+  <div class="sidebar-section">
+    <a class="sidebar-link page" href="#pricing">Pricing</a>
+    <a class="sidebar-link section" href="#pricing-hero">↳ Hero</a>
+    <a class="sidebar-link section" href="#pricing-table">↳ Plans</a>
+    <a class="sidebar-link section" href="#pricing-faq">↳ FAQ</a>
+  </div>
+  <div class="sidebar-section">
+    <a class="sidebar-link page" href="#brands">For brands</a>
+    <a class="sidebar-link section" href="#brands-hero">↳ Hero</a>
+    <a class="sidebar-link section" href="#brands-problem">↳ Problem</a>
+    <a class="sidebar-link section" href="#brands-how">↳ How it works</a>
+    <a class="sidebar-link section" href="#brands-value">↳ Value</a>
+    <a class="sidebar-link section" href="#brands-cta">↳ CTA</a>
+  </div>
+  <div class="sidebar-section">
+    <a class="sidebar-link page" href="#legal">Legal pages</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ═══════════════════════════════════ GLOBAL ═══ -->
+
+<div class="page-block" id="global-nav">
+  <div class="page-tag"><span class="page-name">Global</span><span class="page-url">All pages</span></div>
+  <div class="page-title">Navigation</div>
+  <div class="page-desc">Sticky top nav. Dark background. Present on every page.</div>
+
+  <div class="nav-spec">
+    <div class="ns-logo">pax<span>r</span></div>
+    <span class="ns-link">How it works</span>
+    <span class="ns-link">Pricing</span>
+    <span class="ns-link">For brands</span>
+    <div class="ns-sep"></div>
+    <span class="ns-link">Sign in</span>
+    <span class="ns-cta">Get started</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-num">NAV</div><div class="sec-title">All navigation labels</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Logo</div>
+        <div class="content-copy">paxr</div>
+        <div class="content-copy meta">Always lowercase. Fraunces 900. Links to /</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Primary nav links</div>
+        <div class="content-copy">How it works &nbsp;·&nbsp; Pricing &nbsp;·&nbsp; For brands</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Auth links</div>
+        <div class="content-copy">Sign in &nbsp;·&nbsp; <span class="cta">Get started</span></div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Mobile menu — CTA</div>
+        <div class="content-copy"><span class="cta">Start for free</span></div>
+        <div class="content-copy meta">Full-width jade button at bottom of mobile drawer</div>
+      </div>
+      <div class="dev-note">
+        <div class="dev-note-label">Dev note</div>
+        <div class="dev-note-text">Transparent nav on hero section only. Transitions to solid --paxr-deep on scroll past 80px. Mobile: hamburger opens full-screen drawer with same links + "Start for free" CTA bottom.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-block" id="global-footer">
+  <div class="page-tag"><span class="page-name">Global</span><span class="page-url">All pages</span></div>
+  <div class="page-title">Footer</div>
+  <div class="page-desc">Four-column. Dark background. Present on every page.</div>
+
+  <div class="footer-spec">
+    <div>
+      <div class="fs-col-title">About</div>
+      <div class="ns-logo" style="font-size:18px;margin-bottom:8px;">pax<span style="color:var(--jade);">r</span></div>
+      <div style="font-size:12px;color:rgba(246,245,241,0.4);line-height:1.6;max-width:180px;">Peace, handled. Your AI warranty agent for every product you own.</div>
+      <div style="margin-top:12px;font-size:11px;color:rgba(246,245,241,0.25);">© 2026 Paxr Ltd. All rights reserved.</div>
+    </div>
+    <div>
+      <div class="fs-col-title">Product</div>
+      <span class="fs-col-link">How it works</span>
+      <span class="fs-col-link">Pricing</span>
+      <span class="fs-col-link">Download app</span>
+      <span class="fs-col-link">Sign in</span>
+    </div>
+    <div>
+      <div class="fs-col-title">Company</div>
+      <span class="fs-col-link">For brands</span>
+      <span class="fs-col-link">Blog</span>
+      <span class="fs-col-link">Contact</span>
+      <span class="fs-col-link">getpaxr.com</span>
+    </div>
+    <div>
+      <div class="fs-col-title">Legal</div>
+      <span class="fs-col-link">Privacy policy</span>
+      <span class="fs-col-link">Terms of service</span>
+      <span class="fs-col-link">Cookie policy</span>
+    </div>
+  </div>
+
+  <div class="sec" style="margin-top:16px;">
+    <div class="sec-head"><div class="sec-num">FTR</div><div class="sec-title">Footer copy — all text</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Tagline (under logo)</div>
+        <div class="content-copy">Peace, handled. Your AI warranty agent for every product you own.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Copyright line</div>
+        <div class="content-copy">© 2026 Paxr Ltd. All rights reserved.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Column: Product</div>
+        <div class="content-copy">How it works · Pricing · Download app · Sign in</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Column: Company</div>
+        <div class="content-copy">For brands · Blog · Contact · getpaxr.com</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Column: Legal</div>
+        <div class="content-copy">Privacy policy · Terms of service · Cookie policy</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Pre-footer CTA strip (optional)</div>
+        <div class="content-copy headline" style="font-size:16px;">The next thing you buy — protect it with Paxr.</div>
+        <div style="margin-top:8px;"><span class="cta">Get started free</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-block" id="global-seo">
+  <div class="page-tag"><span class="page-name">Global</span><span class="page-url">SEO defaults</span></div>
+  <div class="page-title">SEO — Meta titles &amp; descriptions</div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-num">SEO</div><div class="sec-title">Per-page meta tags</div></div>
+    <div class="sec-body">
+      <div class="seo-box">
+        <div class="seo-label">/ — Home</div>
+        <div class="seo-title">Paxr — Your AI Warranty Agent | Peace, handled.</div>
+        <div class="seo-url">getpaxr.com</div>
+        <div class="seo-desc">Paxr manages every warranty in your home. Scan a QR code to register in under 20 seconds. Get WhatsApp reminders before warranties expire. Renew automatically. Start free.</div>
+      </div>
+      <div class="seo-box">
+        <div class="seo-label">/how-it-works</div>
+        <div class="seo-title">How Paxr Works — Warranty Management in 20 Seconds</div>
+        <div class="seo-url">getpaxr.com/how-it-works</div>
+        <div class="seo-desc">Scan a QR code, add manually, or photograph your receipt. Paxr registers your warranty, monitors it, and handles renewals on WhatsApp. See how it works.</div>
+      </div>
+      <div class="seo-box">
+        <div class="seo-label">/pricing</div>
+        <div class="seo-title">Paxr Pricing — Free Warranty Tracker · Pro from £10/year</div>
+        <div class="seo-url">getpaxr.com/pricing</div>
+        <div class="seo-desc">Free for up to 3 warranties. Paxr Pro is £10 a year — unlimited warranties, WhatsApp agent, automatic renewals, and claim guidance. Start your 30-day free trial.</div>
+      </div>
+      <div class="seo-box">
+        <div class="seo-label">/brands</div>
+        <div class="seo-title">Paxr for Brands — Built-In Warranty Registration for Manufacturers</div>
+        <div class="seo-url">getpaxr.com/brands</div>
+        <div class="seo-desc">Add a Paxr QR code to your packaging. Your customers register instantly — no portals, no friction. You get registration data, renewal revenue, and product lifecycle intelligence.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ HOME ═══ -->
+
+<div class="page-block" id="home">
+  <div class="page-tag"><span class="page-name">Page 01</span><span class="page-url">getpaxr.com</span></div>
+  <div class="page-title">Home</div>
+  <div class="page-desc">The primary acquisition page. Every section drives toward a single action: "Get started free." Sections in order: Hero → Social proof → Problem → How it works → Features → Agent → Pricing preview → For brands teaser → Final CTA.</div>
+</div>
+
+<!-- HOME: HERO -->
+<div class="page-block" id="home-hero" style="padding-top:0;">
+  <div class="sec">
+    <div class="sec-head"><div class="sec-num">01</div><div class="sec-title">Hero section</div><div class="sec-component">Dark bg / Full-height</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Eyebrow</div>
+        <div class="content-copy">Your warranty agent</div>
+        <div class="content-copy meta">10px caps, jade colour, tracked wide. Above headline.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Headline — primary</div>
+        <div class="content-copy headline">Peace, handled.</div>
+        <div class="content-copy meta">Fraunces 900. Hero size (clamp 64px → 120px). Deep bg, ivory text. The period is mandatory.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Subheadline</div>
+        <div class="content-copy sub">Paxr manages every warranty in your home — registers them in seconds, reminds you before they expire, and renews them for you. Without you having to think about it.</div>
+        <div class="content-copy meta">DM Sans 400. 18–20px. Mist colour on dark bg. Max-width 560px.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">CTA — primary</div>
+        <div class="content-copy"><span class="cta">Start for free</span></div>
+        <div class="content-copy meta">Jade bg. Links to /signup. 16px DM Sans 500. Large padding.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">CTA — secondary</div>
+        <div class="content-copy"><span class="cta-ghost" style="color:rgba(246,245,241,0.7);border-color:rgba(246,245,241,0.25);">See how it works</span></div>
+        <div class="content-copy meta">Ghost style on dark bg. Links to /how-it-works or smooth-scrolls to #how-it-works section.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Supporting line (below CTAs)</div>
+        <div class="content-copy cta-text">Free for up to 3 warranties · No credit card required</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Hero visual (right side / below on mobile)</div>
+        <div class="content-copy body">iPhone mockup showing the Vault dashboard — 2–3 warranty cards visible, one with jade "Active" status, one with amber "Expiring soon." Paxr wordmark visible in app nav. Clean, minimal.</div>
+        <div class="content-copy meta">Static image or CSS mockup. No auto-playing video. Appears to the right on desktop, below copy on mobile.</div>
+      </div>
+      <div class="dev-note">
+        <div class="dev-note-label">Dev note</div>
+        <div class="dev-note-text">Full viewport height hero. Deep (#0E1B29) background. Subtle noise texture overlay at 4% opacity. Nav is transparent here, transitions to solid on scroll. Hero text animates in: eyebrow fades (0ms), headline (100ms), sub (200ms), CTAs (300ms) — ease-out, 400ms duration, translateY(8px) → 0.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME: SOCIAL PROOF -->
+  <div class="sec" id="home-proof">
+    <div class="sec-head"><div class="sec-num">02</div><div class="sec-title">Social proof bar</div><div class="sec-component">Pale bg / Narrow strip</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Stat 1</div>
+        <div class="content-copy headline" style="font-size:16px;">£380</div>
+        <div class="content-copy body">Average UK household loses each year in repairs that should have been covered under warranty.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Stat 2</div>
+        <div class="content-copy headline" style="font-size:16px;">14</div>
+        <div class="content-copy body">Devices in the average UK home with potential warranty coverage. Most go unregistered.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Stat 3</div>
+        <div class="content-copy headline" style="font-size:16px;">&lt;20 sec</div>
+        <div class="content-copy body">Time to register a warranty with Paxr. No portals. No forms. Just scan.</div>
+      </div>
+      <div class="dev-note">
+        <div class="dev-note-label">Dev note</div>
+        <div class="dev-note-text">Three stats in a horizontal row, centred. Stone/pale background, 1px border top and bottom. Stat number in Fraunces 600 deep, body in DM Sans mist. On mobile: stacks vertically, each stat gets a divider line between.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME: PROBLEM -->
+  <div class="sec" id="home-problem">
+    <div class="sec-head"><div class="sec-num">03</div><div class="sec-title">Problem section</div><div class="sec-component">White bg / 3-card grid</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Eyebrow</div>
+        <div class="content-copy">The problem</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Headline</div>
+        <div class="content-copy headline">Your warranties are expiring quietly.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Subheadline</div>
+        <div class="content-copy sub">The average UK home has 14 devices with active warranty coverage. Most people have no idea — until something breaks.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Problem cards</div>
+        <div class="content-cards">
+          <div class="content-card">
+            <div class="content-card-title">Forgotten and fragmented</div>
+            <div class="content-card-body">Warranty cards live in drawers, email inboxes, and manufacturer portals you'll never visit again. There's no single view of what you own.</div>
+          </div>
+          <div class="content-card">
+            <div class="content-card-title">Silent expiry</div>
+            <div class="content-card-body">Most warranties expire without a single notification. You find out when something breaks and there's nothing left to claim on.</div>
+          </div>
+          <div class="content-card">
+            <div class="content-card-title">Missed renewals</div>
+            <div class="content-card-body">Extended warranty options pass unnoticed. The window closes. You pay full price for repairs that could have cost you nothing.</div>
+          </div>
+        </div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Transition line (below cards)</div>
+        <div class="content-copy body">Paxr fixes all three. Here's how.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME: HOW IT WORKS -->
+  <div class="sec" id="home-how">
+    <div class="sec-head"><div class="sec-num">04</div><div class="sec-title">How it works</div><div class="sec-component">Stone bg / Numbered steps</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Eyebrow</div>
+        <div class="content-copy">How it works</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Headline</div>
+        <div class="content-copy headline">From box to protected in 20 seconds.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Step 1 — number</div>
+        <div class="content-copy">01</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Step 1 — title</div>
+        <div class="content-copy headline" style="font-size:16px;">Scan the QR code.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Step 1 — body</div>
+        <div class="content-copy body">Find the Paxr QR code printed inside your product box, on the manual, or on a card included by the manufacturer. Open the app. Scan. Done.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Step 1 — supporting</div>
+        <div class="content-copy meta">No QR code? Add manually or photograph your receipt — Paxr reads the date and product details automatically.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Step 2 — title</div>
+        <div class="content-copy headline" style="font-size:16px;">Your warranty is in the vault.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Step 2 — body</div>
+        <div class="content-copy body">Paxr reads the QR code, confirms your product and warranty terms, and adds it to your vault. You see the expiry date, the warranty type, and exactly how long you're covered for.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Step 3 — title</div>
+        <div class="content-copy headline" style="font-size:16px;">Paxr handles everything else.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Step 3 — body</div>
+        <div class="content-copy body">From here, you don't need to think about it. Paxr monitors every warranty, messages you on WhatsApp before anything expires, and renews them for you the moment you reply.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">CTA below steps</div>
+        <div class="content-copy"><span class="cta">Start for free</span> <span class="cta-ghost">See the full journey</span></div>
+        <div class="content-copy meta">"See the full journey" links to /how-it-works</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME: FEATURES -->
+  <div class="sec" id="home-features">
+    <div class="sec-head"><div class="sec-num">05</div><div class="sec-title">Features</div><div class="sec-component">White bg / 6-feature grid</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Eyebrow</div>
+        <div class="content-copy">What Paxr does</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Headline</div>
+        <div class="content-copy headline">Everything in one vault.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 1 — title</div>
+        <div class="content-copy headline" style="font-size:15px;">All your warranties, one place</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 1 — body</div>
+        <div class="content-copy body">Every device you own, every warranty you hold. Active, expiring, and expired — always visible in a single vault. No more drawers. No more portals.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 2 — title</div>
+        <div class="content-copy headline" style="font-size:15px;">AI agent on WhatsApp</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 2 — body</div>
+        <div class="content-copy body">Paxr messages you on WhatsApp before any warranty expires. Reply YES to renew. It handles the rest — no apps to open, no forms to fill, no portals to find.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 3 — title</div>
+        <div class="content-copy headline" style="font-size:15px;">Scan to register in seconds</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 3 — body</div>
+        <div class="content-copy body">No forms. No manufacturer portals. Scan the QR code in the box. Your warranty is registered in under 20 seconds, with all the terms already confirmed.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 4 — title</div>
+        <div class="content-copy headline" style="font-size:15px;">Expiry alerts that actually land</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 4 — body</div>
+        <div class="content-copy body">90, 30, 7, and 1 day warnings — delivered on WhatsApp, push notification, or SMS. You choose how you want to hear. You'll never be caught out again.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 5 — title</div>
+        <div class="content-copy headline" style="font-size:15px;">Claim guidance, step by step</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 5 — body</div>
+        <div class="content-copy body">Something broke? Message Paxr. It confirms whether you're still covered and walks you through the claim process for that specific manufacturer — no searching, no guessing.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 6 — title</div>
+        <div class="content-copy headline" style="font-size:15px;">Receipt and document storage</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature 6 — body</div>
+        <div class="content-copy body">Upload your receipts and warranty documents once. They live in your vault permanently — accessible any time you need to make a claim or prove ownership.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME: AGENT -->
+  <div class="sec" id="home-agent">
+    <div class="sec-head"><div class="sec-num">06</div><div class="sec-title">Agent section</div><div class="sec-component">Deep dark bg / WhatsApp demo</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Eyebrow</div>
+        <div class="content-copy">Your agent</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Headline</div>
+        <div class="content-copy headline">Meet Paxr.</div>
+        <div class="content-copy meta">Fraunces 900. Ivory on dark. The period is deliberate.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Subheadline</div>
+        <div class="content-copy sub">Paxr isn't a reminder app. It's an agent. It acts on your behalf — monitors every warranty, reaches out before they expire, and handles renewals while you get on with your day.</div>
+        <div class="content-copy meta">Mist colour on dark bg.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">WhatsApp conversation — message 1 (Paxr)</div>
+        <div class="content-copy">Hi Marcus. Your Hoover washing machine warranty expires in 23 days. A 2-year extension costs £29. Want me to handle the renewal?</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">WhatsApp conversation — message 2 (User)</div>
+        <div class="content-copy">Yes please</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">WhatsApp conversation — message 3 (Paxr)</div>
+        <div class="content-copy">Done. Your Hoover is covered until November 2027. Certificate sent to your email.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Pull quote (below chat mockup)</div>
+        <div class="content-copy headline" style="font-style:italic;font-weight:300;">"Handled."</div>
+        <div class="content-copy meta">Fraunces 300 italic. Jade colour. Large size. Below the conversation demo.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Feature callouts (below pull quote)</div>
+        <div class="content-cards">
+          <div class="content-card" style="background:rgba(246,245,241,0.04);border-color:rgba(246,245,241,0.1);">
+            <div class="content-card-title" style="color:#F6F5F1;">Proactive, not reactive</div>
+            <div class="content-card-body" style="color:rgba(246,245,241,0.5);">Paxr reaches out before expiry — you don't need to remember to ask.</div>
+          </div>
+          <div class="content-card" style="background:rgba(246,245,241,0.04);border-color:rgba(246,245,241,0.1);">
+            <div class="content-card-title" style="color:#F6F5F1;">One reply. Done.</div>
+            <div class="content-card-body" style="color:rgba(246,245,241,0.5);">Reply YES on WhatsApp. Paxr handles the renewal, confirms it, and emails your certificate.</div>
+          </div>
+          <div class="content-card" style="background:rgba(246,245,241,0.04);border-color:rgba(246,245,241,0.1);">
+            <div class="content-card-title" style="color:#F6F5F1;">Always on</div>
+            <div class="content-card-body" style="color:rgba(246,245,241,0.5);">Paxr monitors every warranty in your vault, every day. It never forgets. It never misses one.</div>
+          </div>
+        </div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">CTA</div>
+        <div class="content-copy"><span class="cta">Start for free</span></div>
+      </div>
+      <div class="dev-note">
+        <div class="dev-note-label">Dev note</div>
+        <div class="dev-note-text">Full-width deep (#0E1B29) background section. WhatsApp chat mockup appears on the right side, with the text content on the left on desktop. Stacks vertically on mobile — content first, then mockup. The chat messages should animate in sequentially on scroll-into-view (message 1 → 600ms → message 2 → 400ms → message 3).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME: PRICING PREVIEW -->
+  <div class="sec" id="home-pricing">
+    <div class="sec-head"><div class="sec-num">07</div><div class="sec-title">Pricing preview</div><div class="sec-component">Stone bg / 2-plan cards</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Eyebrow</div>
+        <div class="content-copy">Pricing</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Headline</div>
+        <div class="content-copy headline">Free to start. £10 a year to never worry again.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Free plan — name</div>
+        <div class="content-copy headline" style="font-size:16px;">Paxr Free</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Free plan — price</div>
+        <div class="content-copy">£0 / forever</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Free plan — description</div>
+        <div class="content-copy body">Start protecting your most important devices. No credit card required.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Free plan — features (4 lines)</div>
+        <div class="content-copy">Up to 3 warranties &nbsp;·&nbsp; QR code registration &nbsp;·&nbsp; Manual entry &nbsp;·&nbsp; Push notification alerts</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Free plan — CTA</div>
+        <div class="content-copy"><span class="cta-ghost">Get started free</span></div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Pro plan — name</div>
+        <div class="content-copy headline" style="font-size:16px;">Paxr Pro</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Pro plan — price</div>
+        <div class="content-copy headline" style="font-size:24px;">£10 <span style="font-size:14px;font-weight:300;color:var(--mist);">/ year</span></div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Pro plan — pill badge</div>
+        <div class="content-copy"><span class="tag">30-day free trial</span></div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Pro plan — description</div>
+        <div class="content-copy body">The full agent experience. Every warranty handled. Every renewal automated. Every claim guided.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Pro plan — features (8 lines)</div>
+        <div class="content-copy">Unlimited warranties &nbsp;·&nbsp; WhatsApp AI agent &nbsp;·&nbsp; Automatic renewal handling &nbsp;·&nbsp; Claim guidance &nbsp;·&nbsp; Receipt &amp; document storage &nbsp;·&nbsp; SMS fallback notifications &nbsp;·&nbsp; Priority support &nbsp;·&nbsp; Everything in Free</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Pro plan — CTA</div>
+        <div class="content-copy"><span class="cta">Start 30-day free trial</span></div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Below plans — supporting copy</div>
+        <div class="content-copy cta-text">No credit card required for the trial · Cancel anytime · Less than 83p a month</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Link to full pricing</div>
+        <div class="content-copy" style="color:var(--jade-dim);text-decoration:underline;font-size:13px;">See full plan comparison →</div>
+        <div class="content-copy meta">Links to /pricing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME: FOR BRANDS TEASER -->
+  <div class="sec" id="home-brands">
+    <div class="sec-head"><div class="sec-num">08</div><div class="sec-title">For brands — teaser</div><div class="sec-component">Deep bg / Single CTA block</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Eyebrow</div>
+        <div class="content-copy">For manufacturers &amp; retailers</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Headline</div>
+        <div class="content-copy headline">Your customers don't register warranties. We fix that.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Body</div>
+        <div class="content-copy body">Add a Paxr QR code to your packaging. Your customers scan it — their warranty is registered in under 20 seconds. You get registration data, renewal revenue, and product lifecycle intelligence you've never had before.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">CTA</div>
+        <div class="content-copy"><span class="cta">Learn about brand partnerships</span></div>
+        <div class="content-copy meta">Links to /brands</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME: FINAL CTA -->
+  <div class="sec" id="home-cta">
+    <div class="sec-head"><div class="sec-num">09</div><div class="sec-title">Final CTA</div><div class="sec-component">Deep dark bg / Centred</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Headline</div>
+        <div class="content-copy headline">The next thing you buy — protect it with Paxr.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Subheadline</div>
+        <div class="content-copy sub">Scan the QR code. 20 seconds. Done.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">CTA</div>
+        <div class="content-copy"><span class="cta">Get started free</span></div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Supporting</div>
+        <div class="content-copy cta-text">30-day Pro trial · No credit card required · Cancel anytime</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ HOW IT WORKS ═══ -->
+
+<div class="page-block" id="how">
+  <div class="page-tag"><span class="page-name">Page 02</span><span class="page-url">getpaxr.com/how-it-works</span></div>
+  <div class="page-title">How it works</div>
+  <div class="page-desc">The full explainer page. Every journey mapped. Every step detailed. Converts curious visitors who need more than the homepage gives them.</div>
+
+  <div class="sec" id="how-hero">
+    <div class="sec-head"><div class="sec-num">01</div><div class="sec-title">Hero</div><div class="sec-component">Deep bg / Text-only</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Eyebrow</div><div class="content-copy">How it works</div></div>
+      <div class="content-row"><div class="content-label">Headline</div><div class="content-copy headline">Warranty management that does itself.</div></div>
+      <div class="content-row"><div class="content-label">Subheadline</div><div class="content-copy sub">Three ways to register. One agent that handles everything after. Here's exactly what happens.</div></div>
+    </div>
+  </div>
+
+  <div class="sec" id="how-scan">
+    <div class="sec-head"><div class="sec-num">02</div><div class="sec-title">Registering a warranty — 3 methods</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Section eyebrow</div><div class="content-copy">Step one</div></div>
+      <div class="content-row"><div class="content-label">Section headline</div><div class="content-copy headline">Register in under 20 seconds.</div></div>
+      <div class="content-row"><div class="content-label">Method 1 — label</div><div class="content-copy"><span class="tag">Recommended</span> QR scan</div></div>
+      <div class="content-row"><div class="content-label">Method 1 — headline</div><div class="content-copy headline" style="font-size:16px;">Find the Paxr QR code in the box.</div></div>
+      <div class="content-row"><div class="content-label">Method 1 — body</div><div class="content-copy body">Manufacturers who partner with Paxr include a QR code inside every product box — on the manual, a card, or the packaging itself. Open the Paxr app, tap "Scan," and point your camera at the code. Paxr reads the product, confirms your warranty terms, and registers you in under 20 seconds. No forms. No portals. No email confirmation chains.</div></div>
+      <div class="content-row"><div class="content-label">Method 2 — label</div><div class="content-copy">Manual entry</div></div>
+      <div class="content-row"><div class="content-label">Method 2 — headline</div><div class="content-copy headline" style="font-size:16px;">No QR code? Add it manually.</div></div>
+      <div class="content-row"><div class="content-label">Method 2 — body</div><div class="content-copy body">Search for your product by brand and model name. Enter your purchase date. Paxr looks up the standard warranty terms from the manufacturer and fills in the rest. Takes about 60 seconds. Works for any device, any brand, any age.</div></div>
+      <div class="content-row"><div class="content-label">Method 3 — label</div><div class="content-copy">Photo OCR</div></div>
+      <div class="content-row"><div class="content-label">Method 3 — headline</div><div class="content-copy headline" style="font-size:16px;">Photograph your receipt.</div></div>
+      <div class="content-row"><div class="content-label">Method 3 — body</div><div class="content-copy body">Have a pile of receipts and warranties you've never registered? Photograph each receipt. Paxr's OCR reads the purchase date, retailer, and product name automatically — and pre-fills your warranty registration. One tap to confirm.</div></div>
+    </div>
+  </div>
+
+  <div class="sec" id="how-vault">
+    <div class="sec-head"><div class="sec-num">03</div><div class="sec-title">The vault</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Section eyebrow</div><div class="content-copy">Step two</div></div>
+      <div class="content-row"><div class="content-label">Section headline</div><div class="content-copy headline">Your vault. Everything in one view.</div></div>
+      <div class="content-row"><div class="content-label">Body</div><div class="content-copy body">Once a warranty is registered, it lives in your vault permanently. Your vault shows every device you've registered, organised by status — Active, Expiring soon, or Expired. You see exactly how long each warranty has left, when you registered it, and any documents you've stored against it.</div></div>
+      <div class="content-row"><div class="content-label">Vault feature 1</div><div class="content-copy"><strong style="font-weight:500;">Active</strong> — Warranty valid. More than 90 days remaining. Green indicator.</div></div>
+      <div class="content-row"><div class="content-label">Vault feature 2</div><div class="content-copy"><strong style="font-weight:500;">Expiring soon</strong> — Less than 90 days remaining. Paxr will contact you. Amber indicator.</div></div>
+      <div class="content-row"><div class="content-label">Vault feature 3</div><div class="content-copy"><strong style="font-weight:500;">Expired</strong> — Past the expiry date. Claim window closed. Record kept for reference.</div></div>
+      <div class="content-row"><div class="content-label">Vault feature 4</div><div class="content-copy"><strong style="font-weight:500;">Documents</strong> — Upload your original receipt or warranty certificate. Access any time you need it.</div></div>
+    </div>
+  </div>
+
+  <div class="sec" id="how-agent">
+    <div class="sec-head"><div class="sec-num">04</div><div class="sec-title">The agent in action</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Section eyebrow</div><div class="content-copy">Step three</div></div>
+      <div class="content-row"><div class="content-label">Section headline</div><div class="content-copy headline">Paxr watches. You do nothing.</div></div>
+      <div class="content-row"><div class="content-label">Body</div><div class="content-copy body">After registration, Paxr monitors every warranty in your vault. You don't need to open the app, set reminders, or remember anything. Paxr comes to you — on WhatsApp — before any warranty expires.</div></div>
+      <div class="content-row"><div class="content-label">Alert timeline — 90 days</div><div class="content-copy"><strong style="font-weight:500;">90 days before expiry</strong> — "Your [product] warranty expires in 3 months. An extension is available for £X. No action needed yet."</div></div>
+      <div class="content-row"><div class="content-label">Alert timeline — 30 days</div><div class="content-copy"><strong style="font-weight:500;">30 days before expiry</strong> — "Your [product] warranty expires in 30 days. A 2-year extension is £X. Reply YES and I'll handle it."</div></div>
+      <div class="content-row"><div class="content-label">Alert timeline — 7 days</div><div class="content-copy"><strong style="font-weight:500;">7 days before expiry</strong> — "Final reminder — your [product] warranty expires in 7 days. Reply YES to renew for £X."</div></div>
+      <div class="content-row"><div class="content-label">Alert timeline — day of</div><div class="content-copy"><strong style="font-weight:500;">Day of expiry</strong> — "Your [product] warranty expired today. Contact me if you'd like to explore extended cover options."</div></div>
+      <div class="content-row"><div class="content-label">Channel preference note</div><div class="content-copy body">Paxr contacts you via WhatsApp by default (Pro plan). You can switch to push notifications or SMS in your preferences at any time.</div></div>
+    </div>
+  </div>
+
+  <div class="sec" id="how-claims">
+    <div class="sec-head"><div class="sec-num">05</div><div class="sec-title">Making a claim</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Section eyebrow</div><div class="content-copy">When things break</div></div>
+      <div class="content-row"><div class="content-label">Section headline</div><div class="content-copy headline">Something broke. Ask Paxr.</div></div>
+      <div class="content-row"><div class="content-label">Body</div><div class="content-copy body">Message Paxr on WhatsApp: "My dishwasher stopped working." Paxr checks your vault, confirms whether you're still within warranty, and gives you the exact claim steps for that manufacturer — including the contact number, reference you'll need, and what to say.</div></div>
+      <div class="content-row"><div class="content-label">Claim step 1</div><div class="content-copy">You message Paxr with what's broken.</div></div>
+      <div class="content-row"><div class="content-label">Claim step 2</div><div class="content-copy">Paxr checks your vault and confirms your coverage status.</div></div>
+      <div class="content-row"><div class="content-label">Claim step 3</div><div class="content-copy">Paxr gives you the manufacturer's claim process — contact details, what to reference, what to expect.</div></div>
+      <div class="content-row"><div class="content-label">Claim step 4</div><div class="content-copy">You make the claim. Paxr marks it in your vault so you have a record.</div></div>
+      <div class="content-row"><div class="content-label">CTA</div><div class="content-copy"><span class="cta">Start for free</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ PRICING ═══ -->
+
+<div class="page-block" id="pricing">
+  <div class="page-tag"><span class="page-name">Page 03</span><span class="page-url">getpaxr.com/pricing</span></div>
+  <div class="page-title">Pricing</div>
+  <div class="page-desc">Clean, honest. Free vs Pro. Comparison table. FAQ. The £10/yr price must feel like an obvious yes by the end of the page.</div>
+
+  <div class="sec" id="pricing-hero">
+    <div class="sec-head"><div class="sec-num">01</div><div class="sec-title">Hero</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Headline</div><div class="content-copy headline">One price. Everything handled.</div></div>
+      <div class="content-row"><div class="content-label">Subheadline</div><div class="content-copy sub">Free to start. £10 a year for the full agent experience — less than 83p a month.</div></div>
+      <div class="content-row"><div class="content-label">Framing note below sub</div><div class="content-copy body">The average UK household loses £380 a year in repairs that should have been covered under warranty. Paxr Pro costs £10. The maths is straightforward.</div></div>
+    </div>
+  </div>
+
+  <div class="sec" id="pricing-table">
+    <div class="sec-head"><div class="sec-num">02</div><div class="sec-title">Plan comparison</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Free plan — name</div><div class="content-copy headline" style="font-size:16px;">Free</div>
+      </div>
+      <div class="content-row"><div class="content-label">Free plan — price</div><div class="content-copy">£0 &nbsp; <span style="color:var(--mist);font-size:13px;">forever</span></div></div>
+      <div class="content-row"><div class="content-label">Free plan — descriptor</div><div class="content-copy body">Start protecting your most important devices. No credit card, no time limit.</div></div>
+      <div class="content-row"><div class="content-label">Free plan — CTA</div><div class="content-copy"><span class="cta-ghost">Get started free</span></div></div>
+      <div class="content-row"><div class="content-label">Pro plan — name</div><div class="content-copy headline" style="font-size:16px;">Pro</div></div>
+      <div class="content-row"><div class="content-label">Pro plan — price</div><div class="content-copy headline" style="font-size:28px;">£10 <span style="font-size:15px;font-weight:300;color:var(--mist);">/ year</span></div></div>
+      <div class="content-row"><div class="content-label">Pro plan — badge</div><div class="content-copy"><span class="tag">30-day free trial included</span></div></div>
+      <div class="content-row"><div class="content-label">Pro plan — descriptor</div><div class="content-copy body">The full Paxr experience. Unlimited warranties, WhatsApp agent, renewals handled, claims guided. Everything.</div></div>
+      <div class="content-row"><div class="content-label">Pro plan — CTA</div><div class="content-copy"><span class="cta">Start 30-day free trial</span></div></div>
+      <div class="content-row">
+        <div class="content-label">Feature comparison table — rows</div>
+        <div style="font-size:13px;color:var(--deep);line-height:2.2;font-family:var(--f-m);">
+          Warranties stored &nbsp;|&nbsp; 3 &nbsp;|&nbsp; Unlimited<br>
+          QR code registration &nbsp;|&nbsp; ✓ &nbsp;|&nbsp; ✓<br>
+          Manual entry &nbsp;|&nbsp; ✓ &nbsp;|&nbsp; ✓<br>
+          Receipt OCR &nbsp;|&nbsp; ✓ &nbsp;|&nbsp; ✓<br>
+          Push notification alerts &nbsp;|&nbsp; ✓ &nbsp;|&nbsp; ✓<br>
+          WhatsApp AI agent &nbsp;|&nbsp; — &nbsp;|&nbsp; ✓<br>
+          Automatic renewal handling &nbsp;|&nbsp; — &nbsp;|&nbsp; ✓<br>
+          Claim guidance &nbsp;|&nbsp; — &nbsp;|&nbsp; ✓<br>
+          Receipt &amp; document storage &nbsp;|&nbsp; — &nbsp;|&nbsp; ✓<br>
+          SMS fallback notifications &nbsp;|&nbsp; — &nbsp;|&nbsp; ✓<br>
+          Priority support &nbsp;|&nbsp; — &nbsp;|&nbsp; ✓
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="pricing-faq">
+    <div class="sec-head"><div class="sec-num">03</div><div class="sec-title">FAQ</div></div>
+    <div class="sec-body">
+      <div class="content-row">
+        <div class="content-label">Q1</div>
+        <div class="content-copy headline" style="font-size:15px;">Do I need a credit card to start?</div>
+        <div class="content-copy body">No. The Free plan requires no credit card, ever. The Pro 30-day trial also starts without a card — you'll be asked for payment details at the end of the trial if you choose to continue.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Q2</div>
+        <div class="content-copy headline" style="font-size:15px;">What happens to my warranties if I cancel Pro?</div>
+        <div class="content-copy body">Your vault data is never deleted. If you cancel Pro, you keep access to your first 3 warranties on the Free plan. All others are stored but paused — they become active again if you re-subscribe.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Q3</div>
+        <div class="content-copy headline" style="font-size:15px;">How does the WhatsApp agent work?</div>
+        <div class="content-copy body">When you upgrade to Pro and link your WhatsApp number, Paxr's agent can contact you directly in WhatsApp. It sends expiry alerts, renewal prompts, and responds to your questions about any warranty in your vault. You can reply naturally — "renew it," "not now," "what are the claim steps?" — and it handles the rest.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Q4</div>
+        <div class="content-copy headline" style="font-size:15px;">Does Paxr work for warranties that are already registered with the manufacturer?</div>
+        <div class="content-copy body">Yes. You can add any warranty to Paxr manually — even ones you've already registered with the brand. Paxr then takes over the monitoring and renewal management from that point. Think of it as a single control layer over all your existing warranties.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Q5</div>
+        <div class="content-copy headline" style="font-size:15px;">Is my data safe?</div>
+        <div class="content-copy body">Yes. Paxr uses bank-grade encryption for all data at rest and in transit. Your warranty data is yours — we never sell it to third parties. Your data is stored in accordance with UK GDPR. You can export or delete your data at any time from your account settings.</div>
+      </div>
+      <div class="content-row">
+        <div class="content-label">Q6</div>
+        <div class="content-copy headline" style="font-size:15px;">What if the manufacturer doesn't have a Paxr QR code?</div>
+        <div class="content-copy body">Most products won't have Paxr QR codes at launch — that's the brand partnership programme we're building out. For now, add the warranty manually or photograph your receipt. It takes 60 seconds and Paxr monitors it exactly the same way from that point forward.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ FOR BRANDS ═══ -->
+
+<div class="page-block" id="brands">
+  <div class="page-tag"><span class="page-name">Page 04</span><span class="page-url">getpaxr.com/brands</span></div>
+  <div class="page-title">For brands</div>
+  <div class="page-desc">B2B acquisition page. Target: product managers, after-sales teams, and marketing leads at UK consumer electronics and appliance brands. The pitch: low registration rates are costing you data, renewal revenue, and customer relationships. Paxr fixes this.</div>
+
+  <div class="sec" id="brands-hero">
+    <div class="sec-head"><div class="sec-num">01</div><div class="sec-title">Hero</div><div class="sec-component">Deep bg / Bold statement</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Eyebrow</div><div class="content-copy">For manufacturers &amp; retailers</div></div>
+      <div class="content-row"><div class="content-label">Headline</div><div class="content-copy headline">Your customers don't register warranties. We fix that.</div></div>
+      <div class="content-row"><div class="content-label">Subheadline</div><div class="content-copy sub">Less than 12% of UK consumers complete warranty registration after purchase. Paxr makes it so effortless that they actually do it — and the data belongs to you.</div></div>
+      <div class="content-row"><div class="content-label">CTA — primary</div><div class="content-copy"><span class="cta">Talk to our partnerships team</span></div></div>
+      <div class="content-row"><div class="content-label">CTA — secondary</div><div class="content-copy"><span class="cta-ghost" style="color:rgba(246,245,241,0.7);border-color:rgba(246,245,241,0.25);">See how it works for brands</span></div></div>
+    </div>
+  </div>
+
+  <div class="sec" id="brands-problem">
+    <div class="sec-head"><div class="sec-num">02</div><div class="sec-title">The brand's problem</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Eyebrow</div><div class="content-copy">The problem</div></div>
+      <div class="content-row"><div class="content-label">Headline</div><div class="content-copy headline">Low registration rates are expensive.</div></div>
+      <div class="content-row"><div class="content-label">Body</div><div class="content-copy body">The standard warranty registration journey — a URL on a card, a web form, an email confirmation — converts at under 12%. That means 88% of your sold products are invisible to you after the sale. You don't know who owns them, how they're using them, or when their warranty expires. You lose the renewal revenue, the post-purchase relationship, and the product lifecycle data.</div></div>
+      <div class="content-row"><div class="content-label">Stat 1</div><div class="content-copy"><strong style="font-weight:500;">&lt;12%</strong> — average warranty registration rate for UK consumer products</div></div>
+      <div class="content-row"><div class="content-label">Stat 2</div><div class="content-copy"><strong style="font-weight:500;">88%</strong> — of sold products with no post-purchase data relationship</div></div>
+      <div class="content-row"><div class="content-label">Stat 3</div><div class="content-copy"><strong style="font-weight:500;">£4B+</strong> — UK extended warranty market. Most of it currently uncaptured.</div></div>
+    </div>
+  </div>
+
+  <div class="sec" id="brands-how">
+    <div class="sec-head"><div class="sec-num">03</div><div class="sec-title">How it works for brands</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Eyebrow</div><div class="content-copy">How it works</div></div>
+      <div class="content-row"><div class="content-label">Headline</div><div class="content-copy headline">One QR code. Registration solved.</div></div>
+      <div class="content-row"><div class="content-label">Step 1</div><div class="content-copy"><strong style="font-weight:500;">Join as a Paxr partner.</strong> We set up your brand in the Paxr partner portal. Add your products, define your warranty terms, connect your renewal pricing.</div></div>
+      <div class="content-row"><div class="content-label">Step 2</div><div class="content-copy"><strong style="font-weight:500;">We generate your QR codes.</strong> One unique QR code per product SKU. Downloaded from your partner dashboard. Ready to send to your packaging supplier.</div></div>
+      <div class="content-row"><div class="content-label">Step 3</div><div class="content-copy"><strong style="font-weight:500;">Include QR codes in packaging.</strong> In the box, on the manual, or on a card. Your choice. Most partners include a small card: "Register your warranty with Paxr — scan to protect."</div></div>
+      <div class="content-row"><div class="content-label">Step 4</div><div class="content-copy"><strong style="font-weight:500;">Customers scan. Registration is instant.</strong> A customer scans the QR code. Paxr reads your product data, confirms the warranty terms, and registers them in under 20 seconds. No form. No portal.</div></div>
+      <div class="content-row"><div class="content-label">Step 5</div><div class="content-copy"><strong style="font-weight:500;">You get the data. And the renewal revenue.</strong> Every registration flows into your partner dashboard. You see registration rates, active warranties, and expiry forecasts. When Paxr handles a renewal on a customer's behalf, you receive the revenue.</div></div>
+    </div>
+  </div>
+
+  <div class="sec" id="brands-value">
+    <div class="sec-head"><div class="sec-num">04</div><div class="sec-title">Value for brands</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Eyebrow</div><div class="content-copy">What you get</div></div>
+      <div class="content-row"><div class="content-label">Headline</div><div class="content-copy headline">Registration data. Renewal revenue. Customer relationships.</div></div>
+      <div class="content-row"><div class="content-label">Value 1 — title</div><div class="content-copy headline" style="font-size:15px;">Registration rate uplift</div></div>
+      <div class="content-row"><div class="content-label">Value 1 — body</div><div class="content-copy body">Partners using Paxr QR codes see registration rates above 40% — versus the industry average of under 12%. Zero-friction registration converts. Friction doesn't.</div></div>
+      <div class="content-row"><div class="content-label">Value 2 — title</div><div class="content-copy headline" style="font-size:15px;">Extended warranty revenue</div></div>
+      <div class="content-row"><div class="content-label">Value 2 — body</div><div class="content-copy body">When Paxr handles a renewal for a customer on your product, you receive the renewal revenue directly. Paxr takes a small commission. You get income you'd otherwise never see.</div></div>
+      <div class="content-row"><div class="content-label">Value 3 — title</div><div class="content-copy headline" style="font-size:15px;">Product lifecycle intelligence</div></div>
+      <div class="content-row"><div class="content-label">Value 3 — body</div><div class="content-copy body">Your partner dashboard shows you who owns your products, in which regions, for how long, and when their coverage is approaching expiry. Aggregate, anonymised intelligence you've never had access to before.</div></div>
+      <div class="content-row"><div class="content-label">Value 4 — title</div><div class="content-copy headline" style="font-size:15px;">Sustainability reporting</div></div>
+      <div class="content-row"><div class="content-label">Value 4 — body</div><div class="content-copy body">Paxr helps customers repair rather than replace — reducing returns, reducing e-waste, and giving you data on product lifespan that supports your sustainability commitments.</div></div>
+    </div>
+  </div>
+
+  <div class="sec" id="brands-cta">
+    <div class="sec-head"><div class="sec-num">05</div><div class="sec-title">CTA</div><div class="sec-component">Deep bg / Form or contact</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Headline</div><div class="content-copy headline">Partner with Paxr.</div></div>
+      <div class="content-row"><div class="content-label">Subheadline</div><div class="content-copy sub">We're working with a small number of launch partners to get QR codes into packaging before our public launch. If you're a UK manufacturer or retailer, we'd like to talk.</div></div>
+      <div class="content-row"><div class="content-label">Form label — name</div><div class="content-copy">Your name</div></div>
+      <div class="content-row"><div class="content-label">Form label — company</div><div class="content-copy">Company name</div></div>
+      <div class="content-row"><div class="content-label">Form label — email</div><div class="content-copy">Work email</div></div>
+      <div class="content-row"><div class="content-label">Form label — role</div><div class="content-copy">Your role</div></div>
+      <div class="content-row"><div class="content-label">Form label — message</div><div class="content-copy">Tell us about your product range (optional)</div></div>
+      <div class="content-row"><div class="content-label">Form CTA</div><div class="content-copy"><span class="cta">Request a partnership conversation</span></div></div>
+      <div class="content-row"><div class="content-label">Below form</div><div class="content-copy cta-text">We respond to all partnership enquiries within 2 working days.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ LEGAL ═══ -->
+
+<div class="page-block" id="legal">
+  <div class="page-tag"><span class="page-name">Pages 05–06</span><span class="page-url">getpaxr.com/privacy · /terms</span></div>
+  <div class="page-title">Legal pages</div>
+  <div class="page-desc">Privacy policy and Terms of service. These need a qualified solicitor to draft the full legal text before launch. The copy below is the framing and structure only — not legal advice.</div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-num">PP</div><div class="sec-title">Privacy policy — structure</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Page headline</div><div class="content-copy headline">Privacy policy.</div></div>
+      <div class="content-row"><div class="content-label">Opening line</div><div class="content-copy body">Paxr Ltd ("Paxr", "we", "us") takes your privacy seriously. This policy explains what data we collect, why we collect it, and what we do with it. Plain language, no small print.</div></div>
+      <div class="content-row"><div class="content-label">Sections required</div><div class="content-copy">1. What data we collect &nbsp;·&nbsp; 2. How we use your data &nbsp;·&nbsp; 3. Who we share it with &nbsp;·&nbsp; 4. How we store and protect it &nbsp;·&nbsp; 5. Your rights under UK GDPR &nbsp;·&nbsp; 6. Cookies &nbsp;·&nbsp; 7. Contact us</div></div>
+      <div class="content-row"><div class="content-label">Data promise (to be reflected in legal text)</div><div class="content-copy body">We never sell your personal data. We never share warranty data with brands without your consent. You can export or delete your data at any time from account settings.</div></div>
+      <div class="dev-note"><div class="dev-note-label">Dev note</div><div class="dev-note-text">Legal pages use a simple, clean layout: page title in Fraunces, all body in DM Sans 15px, generous line-height. Left-aligned. Max-width 680px (reading width). No sidebar. Table of contents at top with anchor links. Last updated date prominently displayed.</div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><div class="sec-num">TOS</div><div class="sec-title">Terms of service — structure</div></div>
+    <div class="sec-body">
+      <div class="content-row"><div class="content-label">Page headline</div><div class="content-copy headline">Terms of service.</div></div>
+      <div class="content-row"><div class="content-label">Opening line</div><div class="content-copy body">These terms govern your use of Paxr and our services. By creating an account, you agree to these terms. If anything is unclear, contact us.</div></div>
+      <div class="content-row"><div class="content-label">Sections required</div><div class="content-copy">1. Who we are &nbsp;·&nbsp; 2. Your account &nbsp;·&nbsp; 3. The service &nbsp;·&nbsp; 4. Subscriptions and billing &nbsp;·&nbsp; 5. Acceptable use &nbsp;·&nbsp; 6. Liability &nbsp;·&nbsp; 7. Termination &nbsp;·&nbsp; 8. Governing law (England &amp; Wales)</div></div>
+      <div class="dev-note"><div class="dev-note-label">Dev note</div><div class="dev-note-text">Same layout as privacy policy. Both legal pages need a qualified UK solicitor to produce the actual legal text before launch. These are structural placeholders only.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- END MAIN -->
+</div>
+</div>
+
+</body>
+</html>

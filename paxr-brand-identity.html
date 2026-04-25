@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Paxr — Brand Identity</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --deep:    #0E1B29;
+  --depth:   #152333;
+  --surface: #1C2E40;
+  --jade:    #3EC99A;
+  --jade-dim:#2D9A76;
+  --stone:   #F6F5F1;
+  --pale:    #EAE9E4;
+  --mist:    #8FA3B1;
+  --ink:     #1A2A38;
+  --f-head:  'Fraunces',serif;
+  --f-body:  'DM Sans',sans-serif;
+  --f-mono:  'Courier Prime',monospace;
+  --r:8px;
+}
+
+html{scroll-behavior:smooth;}
+body{background:var(--stone);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(246,245,241,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(26,42,56,0.08);padding:0 32px;}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;}
+.nav-logo{font-family:var(--f-head);font-size:20px;font-weight:700;color:var(--deep);letter-spacing:0.04em;}
+.nav-logo span{color:var(--jade);}
+.nav-links{display:flex;gap:4px;}
+.nav-links a{font-size:12px;color:var(--mist);text-decoration:none;padding:6px 12px;border-radius:4px;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s,background 0.2s;}
+.nav-links a:hover{color:var(--deep);background:var(--pale);}
+
+/* SECTIONS */
+section{padding:96px 32px;max-width:1100px;margin:0 auto;}
+section+section{border-top:1px solid rgba(26,42,56,0.08);}
+.section-label{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist);margin-bottom:12px;}
+.section-title{font-family:var(--f-head);font-size:clamp(32px,5vw,52px);font-weight:700;color:var(--deep);letter-spacing:-0.02em;line-height:1.1;margin-bottom:24px;}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:120px;max-width:1100px;margin:0 auto;padding-left:32px;padding-right:32px;}
+.hero-eyebrow{font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--jade);margin-bottom:40px;}
+
+/* WORDMARK DISPLAY */
+.wordmark-hero{font-family:var(--f-head);font-size:clamp(80px,16vw,160px);font-weight:900;color:var(--deep);letter-spacing:0.06em;line-height:1;margin-bottom:16px;position:relative;}
+.wordmark-hero .dot{color:var(--jade);}
+
+.hero-tagline{font-family:var(--f-head);font-size:clamp(18px,3vw,26px);font-weight:300;font-style:italic;color:var(--mist);margin-bottom:48px;letter-spacing:0.01em;}
+
+.hero-meta{display:flex;gap:48px;flex-wrap:wrap;}
+.hero-meta-item .label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);display:block;margin-bottom:4px;}
+.hero-meta-item .val{font-size:14px;color:var(--deep);font-weight:500;}
+
+/* WORDMARK SECTION */
+.mark-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px;}
+.mark-card{border-radius:12px;padding:48px 40px;display:flex;flex-direction:column;gap:24px;}
+.mark-card.light{background:var(--stone);border:1px solid rgba(26,42,56,0.1);}
+.mark-card.dark{background:var(--deep);}
+.mark-card.jade{background:var(--jade);}
+.mark-word{font-family:var(--f-head);font-size:52px;font-weight:900;letter-spacing:0.06em;line-height:1;}
+.mark-word.on-dark{color:var(--stone);}
+.mark-word.on-light{color:var(--deep);}
+.mark-word.on-jade{color:var(--deep);}
+.mark-caption{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;}
+.mark-caption.on-dark{color:rgba(246,245,241,0.4);}
+.mark-caption.on-light{color:var(--mist);}
+.mark-caption.on-jade{color:rgba(14,27,41,0.5);}
+
+/* with mark symbol */
+.mark-lockup{display:flex;align-items:center;gap:14px;}
+.mark-symbol{width:44px;height:44px;flex-shrink:0;}
+
+/* PALETTE */
+.palette-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:32px;}
+.swatch{border-radius:var(--r);overflow:hidden;border:1px solid rgba(26,42,56,0.07);}
+.swatch-color{height:100px;}
+.swatch-info{padding:14px 16px;background:white;}
+.swatch-name{font-size:13px;font-weight:500;color:var(--deep);margin-bottom:2px;}
+.swatch-hex{font-family:var(--f-mono);font-size:12px;color:var(--mist);margin-bottom:4px;}
+.swatch-use{font-size:11px;color:var(--mist);line-height:1.5;}
+
+/* TYPOGRAPHY */
+.type-specimen{margin-top:32px;display:grid;gap:24px;}
+.type-row{background:white;border:1px solid rgba(26,42,56,0.07);border-radius:var(--r);padding:28px 32px;display:flex;align-items:baseline;gap:32px;flex-wrap:wrap;}
+.type-meta{width:140px;flex-shrink:0;}
+.type-meta-name{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mist);margin-bottom:4px;}
+.type-meta-detail{font-size:11px;color:var(--pale-text,#aaa);}
+.type-sample{flex:1;}
+
+/* VOICE */
+.voice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px;}
+.voice-card{background:white;border:1px solid rgba(26,42,56,0.07);border-radius:var(--r);padding:24px;}
+.voice-card-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:12px;}
+.voice-do{color:var(--jade-dim);}
+.voice-dont{color:#C0392B;}
+.voice-line{font-size:14px;color:var(--deep);line-height:1.6;padding:6px 0;border-bottom:1px solid var(--pale);}
+.voice-line:last-child{border-bottom:none;}
+
+/* TAGLINE SYSTEM */
+.tagline-grid{display:grid;gap:12px;margin-top:32px;}
+.tagline-card{background:var(--deep);border-radius:var(--r);padding:28px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.tagline-text{font-family:var(--f-head);font-size:clamp(20px,3vw,32px);font-weight:700;color:var(--stone);letter-spacing:-0.01em;}
+.tagline-text .accent{color:var(--jade);}
+.tagline-use{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(246,245,241,0.35);}
+
+/* COMPONENTS */
+.component-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:32px;}
+
+/* Warranty Card */
+.warranty-card{background:white;border:1px solid rgba(26,42,56,0.09);border-radius:12px;padding:20px;position:relative;overflow:hidden;}
+.warranty-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--jade);}
+.warranty-card.expiring::before{background:#E8A020;}
+.warranty-card.expired::before{background:#C0392B;}
+.wc-brand{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mist);margin-bottom:4px;}
+.wc-product{font-family:var(--f-head);font-size:18px;font-weight:600;color:var(--deep);margin-bottom:12px;line-height:1.2;}
+.wc-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--pale);}
+.wc-days{font-family:var(--f-mono);font-size:24px;font-weight:700;color:var(--jade);}
+.wc-days.warn{color:#E8A020;}
+.wc-days.gone{color:#C0392B;}
+.wc-days-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mist);}
+.wc-badge{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:4px;}
+.wc-badge.active{background:rgba(62,201,154,0.12);color:var(--jade-dim);}
+.wc-badge.expiring{background:rgba(232,160,32,0.12);color:#B8800A;}
+.wc-badge.expired{background:rgba(192,57,43,0.08);color:#C0392B;}
+
+/* Agent bubble */
+.agent-window{background:var(--deep);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;}
+.agent-header{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid rgba(246,245,241,0.08);}
+.agent-avatar{width:36px;height:36px;border-radius:50%;background:var(--jade);display:flex;align-items:center;justify-content:center;font-family:var(--f-head);font-size:14px;font-weight:700;color:var(--deep);flex-shrink:0;}
+.agent-name{font-size:13px;font-weight:500;color:var(--stone);}
+.agent-status{font-size:11px;color:var(--jade);display:flex;align-items:center;gap:4px;}
+.agent-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--jade);display:inline-block;}
+.bubble{max-width:85%;padding:10px 14px;font-size:13px;line-height:1.55;}
+.bubble.from-agent{background:rgba(246,245,241,0.07);color:var(--stone);border-radius:4px 14px 14px 14px;align-self:flex-start;}
+.bubble.from-user{background:var(--jade);color:var(--deep);border-radius:14px 4px 14px 14px;align-self:flex-end;}
+.agent-action{display:flex;gap:8px;margin-top:4px;}
+.action-btn{font-size:12px;padding:7px 14px;border-radius:20px;cursor:pointer;font-family:var(--f-body);border:1px solid var(--jade);color:var(--jade);background:transparent;}
+
+/* Status badge */
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.badge{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:5px 12px;border-radius:20px;font-family:var(--f-body);}
+.badge.active{background:rgba(62,201,154,0.12);color:#2D9A76;}
+.badge.expiring{background:rgba(232,160,32,0.1);color:#B8800A;}
+.badge.expired{background:rgba(192,57,43,0.07);color:#A93226;}
+.badge.claimed{background:rgba(14,27,41,0.07);color:var(--mist);}
+
+/* Notification */
+.notif{background:white;border:1px solid rgba(26,42,56,0.09);border-radius:12px;padding:16px;display:flex;gap:14px;align-items:flex-start;}
+.notif-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;}
+.notif-icon.jade{background:rgba(62,201,154,0.12);}
+.notif-icon.warn{background:rgba(232,160,32,0.1);}
+.notif-body-title{font-size:13px;font-weight:500;color:var(--deep);margin-bottom:2px;}
+.notif-body-text{font-size:12px;color:var(--mist);line-height:1.5;}
+.notif-time{font-size:11px;color:var(--mist);margin-left:auto;flex-shrink:0;}
+
+/* DARK SECTION */
+.dark-section{background:var(--deep);padding:96px 32px;margin-top:0;}
+.dark-inner{max-width:1100px;margin:0 auto;}
+.dark-section .section-label{color:rgba(246,245,241,0.35);}
+.dark-section .section-title{color:var(--stone);}
+
+/* MOTION RULES */
+.motion-rule{background:rgba(246,245,241,0.05);border-radius:var(--r);padding:16px 20px;margin-bottom:10px;display:flex;gap:20px;align-items:flex-start;}
+.motion-rule-name{font-family:var(--f-mono);font-size:12px;color:var(--jade);width:160px;flex-shrink:0;}
+.motion-rule-desc{font-size:13px;color:rgba(246,245,241,0.6);line-height:1.6;}
+
+/* DO/DONT */
+.dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px;}
+.dd-card{border-radius:var(--r);padding:24px;}
+.dd-card.do{background:rgba(62,201,154,0.06);border:1px solid rgba(62,201,154,0.2);}
+.dd-card.dont{background:rgba(192,57,43,0.05);border:1px solid rgba(192,57,43,0.15);}
+.dd-header{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:14px;font-weight:500;}
+.dd-card.do .dd-header{color:var(--jade-dim);}
+.dd-card.dont .dd-header{color:#C0392B;}
+.dd-item{font-size:13px;color:var(--deep);padding:5px 0;border-bottom:1px solid rgba(26,42,56,0.06);line-height:1.5;}
+.dd-item:last-child{border-bottom:none;}
+
+/* FOOTER */
+footer{background:var(--deep);padding:48px 32px;text-align:center;}
+footer .f-logo{font-family:var(--f-head);font-size:32px;font-weight:900;color:var(--stone);letter-spacing:0.06em;margin-bottom:8px;}
+footer .f-logo span{color:var(--jade);}
+footer p{font-size:12px;color:rgba(246,245,241,0.3);letter-spacing:0.08em;}
+
+@media(max-width:640px){
+  .mark-grid,.voice-grid,.dd-grid{grid-template-columns:1fr;}
+  .type-row{flex-direction:column;gap:8px;}
+  .type-meta{width:100%;}
+  nav .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">pax<span>r</span></div>
+    <div class="nav-links">
+      <a href="#wordmark">Wordmark</a>
+      <a href="#colour">Colour</a>
+      <a href="#type">Type</a>
+      <a href="#voice">Voice</a>
+      <a href="#components">Components</a>
+      <a href="#rules">Rules</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-eyebrow">Brand Identity — v1.0 · getpaxr.com · April 2026</div>
+  <div class="wordmark-hero">pax<span class="dot">r</span></div>
+  <div class="hero-tagline">Peace, handled.</div>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><span class="label">Category</span><span class="val">Consumer AI Agent</span></div>
+    <div class="hero-meta-item"><span class="label">Market</span><span class="val">Global — UK first</span></div>
+    <div class="hero-meta-item"><span class="label">Position</span><span class="val">Warranty agent for people who own things</span></div>
+    <div class="hero-meta-item"><span class="label">Domain</span><span class="val">getpaxr.com</span></div>
+  </div>
+</div>
+
+<!-- BRAND IDEA -->
+<section>
+  <div class="section-label">The idea</div>
+  <div class="section-title">A warranty isn't a document.<br>It's a promise.</div>
+  <p style="max-width:600px;color:#4A5E6E;font-size:17px;line-height:1.75;margin-bottom:32px;">
+    When someone buys a warranty, they're not buying paperwork. They're buying the removal of a specific fear — <em>"if this breaks, I'll be left dealing with it alone."</em> Paxr exists to make that fear disappear. Not just when things break. Every day. Quietly. Automatically.
+  </p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+    <div style="background:white;border:1px solid rgba(26,42,56,0.08);border-radius:var(--r);padding:20px;">
+      <div style="font-family:var(--f-head);font-size:28px;font-weight:700;color:var(--jade);margin-bottom:6px;">Peace</div>
+      <div style="font-size:13px;color:#4A5E6E;line-height:1.5;">The emotional product. Not coverage. Not documents. The feeling that it's handled.</div>
+    </div>
+    <div style="background:white;border:1px solid rgba(26,42,56,0.08);border-radius:var(--r);padding:20px;">
+      <div style="font-family:var(--f-head);font-size:28px;font-weight:700;color:var(--deep);margin-bottom:6px;">Agent</div>
+      <div style="font-size:13px;color:#4A5E6E;line-height:1.5;">Paxr acts. It doesn't wait to be asked. It monitors, reminds, renews, and confirms.</div>
+    </div>
+    <div style="background:white;border:1px solid rgba(26,42,56,0.08);border-radius:var(--r);padding:20px;">
+      <div style="font-family:var(--f-head);font-size:28px;font-weight:700;color:var(--mist);margin-bottom:6px;">Minimal</div>
+      <div style="font-size:13px;color:#4A5E6E;line-height:1.5;">Every product interaction should take less than 20 seconds. Less friction is more peace.</div>
+    </div>
+    <div style="background:white;border:1px solid rgba(26,42,56,0.08);border-radius:var(--r);padding:20px;">
+      <div style="font-family:var(--f-head);font-size:28px;font-weight:700;color:var(--deep);margin-bottom:6px;">Global</div>
+      <div style="font-size:13px;color:#4A5E6E;line-height:1.5;">'Pax' means peace across every major language family. The brand travels without translation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORDMARK -->
+<section id="wordmark">
+  <div class="section-label">01 · Wordmark</div>
+  <div class="section-title">The name is the logo.</div>
+  <p style="max-width:560px;color:#4A5E6E;margin-bottom:8px;">
+    Paxr is set in Fraunces — a variable serif with optical character. At large sizes it's authoritative. At small sizes it stays warm. Always lowercase. The dropped vowel is a feature, not a typo.
+  </p>
+
+  <div class="mark-grid">
+    <div class="mark-card light">
+      <div>
+        <div class="mark-word on-light">paxr</div>
+      </div>
+      <div class="mark-caption on-light">Primary — light backgrounds</div>
+    </div>
+    <div class="mark-card dark">
+      <div>
+        <div class="mark-word on-dark">paxr</div>
+      </div>
+      <div class="mark-caption on-dark">Primary — dark backgrounds</div>
+    </div>
+    <div class="mark-card" style="background:var(--pale);border:1px solid rgba(26,42,56,0.08);">
+      <div class="mark-lockup">
+        <svg class="mark-symbol" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="22" cy="22" r="18" stroke="#0E1B29" stroke-width="2.5" stroke-dasharray="96 16" stroke-dashoffset="4" stroke-linecap="round"/>
+          <circle cx="22" cy="4.5" r="4.5" fill="#3EC99A"/>
+        </svg>
+        <div class="mark-word on-light" style="font-size:40px;">paxr</div>
+      </div>
+      <div class="mark-caption on-light">Lockup with symbol mark</div>
+    </div>
+    <div class="mark-card jade">
+      <div>
+        <div class="mark-word on-jade">paxr</div>
+      </div>
+      <div class="mark-caption on-jade">Jade treatment — campaigns</div>
+    </div>
+  </div>
+
+  <div style="background:white;border:1px solid rgba(26,42,56,0.08);border-radius:var(--r);padding:24px 28px;margin-top:16px;">
+    <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:16px;">Symbol mark — explained</div>
+    <div style="display:flex;align-items:center;gap:32px;flex-wrap:wrap;">
+      <svg width="80" height="80" viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="22" r="18" stroke="#0E1B29" stroke-width="2.5" stroke-dasharray="96 16" stroke-dashoffset="4" stroke-linecap="round"/>
+        <circle cx="22" cy="4.5" r="4.5" fill="#3EC99A"/>
+      </svg>
+      <div style="flex:1;min-width:220px;">
+        <p style="font-size:14px;color:#4A5E6E;line-height:1.7;margin-bottom:12px;">The almost-complete circle represents a warranty period — the arc of protection. The gap is the moment before Paxr. The jade dot closes it: <em>handled, resolved, complete.</em></p>
+        <p style="font-size:13px;color:var(--mist);">The symbol is used optionally alongside the wordmark. The wordmark stands alone in most contexts. Never use the symbol without the wordmark at launch stage.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sizing rules -->
+  <div style="background:white;border:1px solid rgba(26,42,56,0.08);border-radius:var(--r);padding:24px 28px;margin-top:12px;">
+    <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:16px;">Size & spacing rules</div>
+    <div style="display:flex;gap:32px;flex-wrap:wrap;">
+      <div>
+        <div style="font-family:var(--f-head);font-size:56px;font-weight:900;color:var(--deep);letter-spacing:0.06em;line-height:1;margin-bottom:6px;">paxr</div>
+        <div style="font-size:11px;color:var(--mist);">Hero / OOH — 56px+</div>
+      </div>
+      <div>
+        <div style="font-family:var(--f-head);font-size:36px;font-weight:900;color:var(--deep);letter-spacing:0.06em;line-height:1;margin-bottom:6px;">paxr</div>
+        <div style="font-size:11px;color:var(--mist);">Marketing — 36px</div>
+      </div>
+      <div>
+        <div style="font-family:var(--f-head);font-size:22px;font-weight:900;color:var(--deep);letter-spacing:0.06em;line-height:1;margin-bottom:6px;">paxr</div>
+        <div style="font-size:11px;color:var(--mist);">Nav / Header — 22px</div>
+      </div>
+      <div>
+        <div style="font-family:var(--f-head);font-size:14px;font-weight:900;color:var(--deep);letter-spacing:0.06em;line-height:1;margin-bottom:6px;">paxr</div>
+        <div style="font-size:11px;color:var(--mist);">Minimum — 14px</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOUR -->
+<section id="colour">
+  <div class="section-label">02 · Colour</div>
+  <div class="section-title">Five colours. One story.</div>
+  <p style="max-width:560px;color:#4A5E6E;margin-bottom:8px;">Deep navy is the world before Paxr — the problem space. Jade is the resolution. Stone and mist are the surfaces everything lives on. This is the full palette.</p>
+
+  <div class="palette-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#0E1B29;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Paxr Deep</div>
+        <div class="swatch-hex">#0E1B29</div>
+        <div class="swatch-use">Primary dark. All dark UI. Text on light. The anchor of the brand.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#3EC99A;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Paxr Jade</div>
+        <div class="swatch-hex">#3EC99A</div>
+        <div class="swatch-use">The resolution colour. Active status. CTAs. Agent confirmations. The "handled" feeling.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F6F5F1;border:1px solid rgba(0,0,0,0.04);"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Paxr Stone</div>
+        <div class="swatch-hex">#F6F5F1</div>
+        <div class="swatch-use">Light background. Never clinical white — Stone is warm, settled, at ease.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#8FA3B1;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Paxr Mist</div>
+        <div class="swatch-hex">#8FA3B1</div>
+        <div class="swatch-use">Secondary text. Labels. Subheadings. Metadata. Never used for primary content.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1C2E40;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Paxr Depth</div>
+        <div class="swatch-hex">#1C2E40</div>
+        <div class="swatch-use">Card surfaces on dark UI. One step lighter than Deep. Creates depth in dark mode.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#E8A020;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Paxr Amber</div>
+        <div class="swatch-hex">#E8A020</div>
+        <div class="swatch-use">Expiry warnings only. Never decorative. When the user sees amber — something needs attention.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Colour usage rules -->
+  <div style="background:var(--deep);border-radius:12px;padding:32px;margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <div>
+      <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(246,245,241,0.35);margin-bottom:14px;">Use jade for</div>
+      <div style="font-size:13px;color:rgba(246,245,241,0.7);line-height:2;">Active warranty status<br>CTA buttons<br>Agent confirmation messages<br>Success states<br>Progress indicators</div>
+    </div>
+    <div>
+      <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(246,245,241,0.35);margin-bottom:14px;">Never use jade for</div>
+      <div style="font-size:13px;color:rgba(246,245,241,0.7);line-height:2;">Warning states (use Amber)<br>Error states (use #C0392B)<br>Decoration or illustration<br>More than one element per screen<br>Text on white backgrounds below 16px</div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPOGRAPHY -->
+<section id="type">
+  <div class="section-label">03 · Typography</div>
+  <div class="section-title">Two voices. One language.</div>
+  <p style="max-width:560px;color:#4A5E6E;margin-bottom:8px;">Fraunces brings warmth and authority to headlines. DM Sans carries the interface — clean, readable, never cold. Courier Prime handles technical data.</p>
+
+  <div class="type-specimen">
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Fraunces 900</div>
+        <div style="font-size:11px;color:var(--mist);">Display / Hero</div>
+      </div>
+      <div class="type-sample">
+        <div style="font-family:var(--f-head);font-size:48px;font-weight:900;color:var(--deep);letter-spacing:-0.02em;line-height:1;">Peace, handled.</div>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Fraunces 700</div>
+        <div style="font-size:11px;color:var(--mist);">Section headings</div>
+      </div>
+      <div class="type-sample">
+        <div style="font-family:var(--f-head);font-size:32px;font-weight:700;color:var(--deep);letter-spacing:-0.01em;">Your warranty vault is protected.</div>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Fraunces 300i</div>
+        <div style="font-size:11px;color:var(--mist);">Pull quotes / Agent voice</div>
+      </div>
+      <div class="type-sample">
+        <div style="font-family:var(--f-head);font-size:22px;font-weight:300;font-style:italic;color:var(--mist);">"Your Samsung TV warranty expires in 23 days. Want me to handle the renewal?"</div>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">DM Sans 500</div>
+        <div style="font-size:11px;color:var(--mist);">UI labels / Subheadings</div>
+      </div>
+      <div class="type-sample">
+        <div style="font-family:var(--f-body);font-size:14px;font-weight:500;color:var(--deep);letter-spacing:0.01em;">Active warranties · Expiring soon · Expired · Claimed</div>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">DM Sans 400</div>
+        <div style="font-size:11px;color:var(--mist);">Body copy</div>
+      </div>
+      <div class="type-sample">
+        <div style="font-family:var(--f-body);font-size:15px;font-weight:400;color:#4A5E6E;line-height:1.7;max-width:480px;">Every device in your home with an active warranty is stored in your Paxr vault. Paxr monitors every one and acts before you even notice a problem.</div>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Courier Prime</div>
+        <div style="font-size:11px;color:var(--mist);">Codes / Dates / Data</div>
+      </div>
+      <div class="type-sample">
+        <div style="font-family:var(--f-mono);font-size:15px;color:var(--deep);">WRN-2024-0934-A · Expires 12 Nov 2026 · £34.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section id="voice">
+  <div class="section-label">04 · Brand Voice</div>
+  <div class="section-title">Short. Declarative. Done.</div>
+  <p style="max-width:560px;color:#4A5E6E;margin-bottom:4px;">Paxr speaks like a competent friend who has already sorted the situation before you got there. No essays. No jargon. No apologies. Just: <em>"It's handled."</em></p>
+
+  <!-- Taglines -->
+  <div class="tagline-grid">
+    <div class="tagline-card">
+      <div class="tagline-text">Peace, <span class="accent">handled.</span></div>
+      <div class="tagline-use">Primary tagline</div>
+    </div>
+    <div class="tagline-card">
+      <div class="tagline-text">Every warranty. <span class="accent">One agent.</span></div>
+      <div class="tagline-use">Product explanation</div>
+    </div>
+    <div class="tagline-card">
+      <div class="tagline-text">Own things. <span class="accent">Paxr handles the rest.</span></div>
+      <div class="tagline-use">Consumer acquisition</div>
+    </div>
+    <div class="tagline-card">
+      <div class="tagline-text">Your warranty <span class="accent">never expires</span> quietly again.</div>
+      <div class="tagline-use">Problem-aware ads</div>
+    </div>
+  </div>
+
+  <!-- Do / Don't -->
+  <div class="dd-grid">
+    <div class="dd-card do">
+      <div class="dd-header">✓ Paxr sounds like this</div>
+      <div class="dd-item">"Your TV warranty expires in 30 days. Renew now?"</div>
+      <div class="dd-item">"Done. Your dishwasher is covered until 2028."</div>
+      <div class="dd-item">"You have 3 warranties expiring this quarter."</div>
+      <div class="dd-item">"Scan the box. We'll handle the rest."</div>
+      <div class="dd-item">"Handled."</div>
+    </div>
+    <div class="dd-card dont">
+      <div class="dd-header">✗ Paxr never sounds like this</div>
+      <div class="dd-item">"We're delighted to inform you that your warranty registration was successful."</div>
+      <div class="dd-item">"Please be advised that your warranty period is approaching expiration."</div>
+      <div class="dd-item">"Our comprehensive warranty management solution provides..."</div>
+      <div class="dd-item">"Don't forget to register your product for full warranty benefits!"</div>
+      <div class="dd-item">"Hi there! 👋 Just a friendly reminder..."</div>
+    </div>
+  </div>
+
+  <!-- Voice principles -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px;">
+    {["Active not passive","Specific not vague","One sentence over three","State facts. Ask one thing.","Never exclaim."].map((p,i)=>`
+    <div style="background:white;border:1px solid rgba(26,42,56,0.08);border-radius:var(--r);padding:16px 18px;">
+      <div style="font-family:var(--f-mono);font-size:10px;color:var(--mist);margin-bottom:6px;">0${i+1}</div>
+      <div style="font-size:14px;font-weight:500;color:var(--deep);">${p}</div>
+    </div>`)}
+  </div>
+</section>
+
+<!-- COMPONENTS -->
+<section id="components">
+  <div class="section-label">05 · UI Components</div>
+  <div class="section-title">The product in brand.</div>
+  <p style="max-width:560px;color:#4A5E6E;margin-bottom:32px;">Every component carries the brand system. Colour, type, and voice working together at the interaction level.</p>
+
+  <div class="component-grid">
+    <!-- Active warranty card -->
+    <div>
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;">Warranty card — active</div>
+      <div class="warranty-card">
+        <div class="wc-brand">Samsung</div>
+        <div class="wc-product">65" QLED 4K Television</div>
+        <div style="font-size:12px;color:var(--mist);">Serial: SM-QN65B · Registered 14 Jan 2024</div>
+        <div class="wc-row">
+          <div>
+            <div class="wc-days">247</div>
+            <div class="wc-days-label">days remaining</div>
+          </div>
+          <div class="wc-badge active">Active</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expiring warranty card -->
+    <div>
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;">Warranty card — expiring</div>
+      <div class="warranty-card expiring">
+        <div class="wc-brand">Hoover</div>
+        <div class="wc-product">H-Wash 500 1400rpm</div>
+        <div style="font-size:12px;color:var(--mist);">Serial: HW-514-D · Registered 03 Nov 2022</div>
+        <div class="wc-row">
+          <div>
+            <div class="wc-days warn">23</div>
+            <div class="wc-days-label">days remaining</div>
+          </div>
+          <div class="wc-badge expiring">Expiring soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agent window -->
+    <div>
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;">Agent conversation</div>
+      <div class="agent-window">
+        <div class="agent-header">
+          <div class="agent-avatar">P</div>
+          <div>
+            <div class="agent-name">Paxr</div>
+            <div class="agent-status">Active</div>
+          </div>
+        </div>
+        <div class="bubble from-agent">Your Hoover warranty expires in 23 days. A 2-year extension is £29. Want me to handle it?</div>
+        <div class="bubble from-user">Yes, do it</div>
+        <div class="bubble from-agent">Done. Your Hoover is covered until November 2027. Certificate emailed.</div>
+        <div class="agent-action">
+          <button class="action-btn">View warranty</button>
+          <button class="action-btn">See all</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status badges -->
+    <div>
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;">Status system</div>
+      <div style="background:white;border:1px solid rgba(26,42,56,0.08);border-radius:var(--r);padding:20px;">
+        <div class="badge-row">
+          <span class="badge active">Active</span>
+          <span class="badge expiring">Expiring soon</span>
+          <span class="badge expired">Expired</span>
+          <span class="badge claimed">Claimed</span>
+        </div>
+        <div style="margin-top:20px;display:grid;gap:8px;">
+          <div style="font-size:12px;color:#4A5E6E;padding:8px 0;border-bottom:1px solid var(--pale);"><strong style="font-weight:500;color:var(--jade);">Active</strong> — warranty valid, more than 90 days remaining</div>
+          <div style="font-size:12px;color:#4A5E6E;padding:8px 0;border-bottom:1px solid var(--pale);"><strong style="font-weight:500;color:#E8A020;">Expiring soon</strong> — less than 90 days remaining</div>
+          <div style="font-size:12px;color:#4A5E6E;padding:8px 0;border-bottom:1px solid var(--pale);"><strong style="font-weight:500;color:#C0392B;">Expired</strong> — past expiry date</div>
+          <div style="font-size:12px;color:#4A5E6E;padding:8px 0;"><strong style="font-weight:500;color:var(--mist);">Claimed</strong> — claim has been filed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div>
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;">Notifications</div>
+      <div style="display:grid;gap:10px;">
+        <div class="notif">
+          <div class="notif-icon jade">✓</div>
+          <div style="flex:1;">
+            <div class="notif-body-title">Warranty registered</div>
+            <div class="notif-body-text">Samsung TV — covered until Nov 2026</div>
+          </div>
+          <div class="notif-time">now</div>
+        </div>
+        <div class="notif">
+          <div class="notif-icon warn">!</div>
+          <div style="flex:1;">
+            <div class="notif-body-title">Expiring in 30 days</div>
+            <div class="notif-body-text">Hoover H-Wash · Tap to renew</div>
+          </div>
+          <div class="notif-time">2h ago</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div>
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;">Buttons</div>
+      <div style="background:white;border:1px solid rgba(26,42,56,0.08);border-radius:var(--r);padding:20px;display:grid;gap:10px;">
+        <button style="background:var(--jade);color:var(--deep);border:none;padding:14px 24px;border-radius:8px;font-family:var(--f-body);font-size:14px;font-weight:500;cursor:pointer;width:100%;">Scan QR code</button>
+        <button style="background:var(--deep);color:var(--stone);border:none;padding:14px 24px;border-radius:8px;font-family:var(--f-body);font-size:14px;font-weight:500;cursor:pointer;width:100%;">Add manually</button>
+        <button style="background:transparent;color:var(--deep);border:1.5px solid rgba(26,42,56,0.2);padding:13px 24px;border-radius:8px;font-family:var(--f-body);font-size:14px;cursor:pointer;width:100%;">View all warranties</button>
+        <button style="background:transparent;color:var(--mist);border:none;padding:10px;font-family:var(--f-body);font-size:13px;cursor:pointer;">Skip for now</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RULES — DARK BG -->
+<div class="dark-section" id="rules">
+  <div class="dark-inner">
+    <div class="section-label">06 · Brand Rules</div>
+    <div class="section-title">What never changes.</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:32px;">
+      {[
+        {n:"01",title:"Always lowercase",rule:"The wordmark is always 'paxr' — never 'Paxr', never 'PAXR'. Lowercase is intentional. It signals approachability within authority."},
+        {n:"02",title:"Jade for resolution only",rule:"Jade is the 'handled' colour. Use it only when something is confirmed, completed, or active. Never as decoration. Scarcity is its power."},
+        {n:"03",title:"One serif, one sans",rule:"Fraunces for headings. DM Sans for everything else. Never mix another typeface into the brand without a deliberate reason."},
+        {n:"04",title:"No exclamation marks",rule:"Paxr never shouts. It states. 'Done.' not 'Done!' The absence of exclamation is itself a brand signal — confidence doesn't need punctuation."},
+        {n:"05",title:"Amber means attention needed",rule:"Amber is not decorative. It means the user needs to act. Never use it to highlight a feature or for aesthetics."},
+        {n:"06",title:"Minimum clear space = x",rule:"The clear space around the wordmark is always equal to the height of the 'x' in paxr. Nothing enters that space — not on any medium."},
+      ].map(r=>`
+      <div style="background:rgba(246,245,241,0.04);border:1px solid rgba(246,245,241,0.08);border-radius:var(--r);padding:20px;">
+        <div style="font-family:var(--f-mono);font-size:10px;color:rgba(246,245,241,0.25);margin-bottom:10px;">${r.n}</div>
+        <div style="font-family:var(--f-head);font-size:17px;font-weight:600;color:var(--stone);margin-bottom:8px;">${r.title}</div>
+        <div style="font-size:13px;color:rgba(246,245,241,0.5);line-height:1.65;">${r.rule}</div>
+      </div>`)}
+    </div>
+
+    <!-- Motion -->
+    <div style="margin-top:48px;">
+      <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(246,245,241,0.35);margin-bottom:20px;">Motion principles</div>
+      <div>
+        <div class="motion-rule">
+          <div class="motion-rule-name">ease-out cubic</div>
+          <div class="motion-rule-desc">All UI transitions. Fast start, gentle landing. The feeling of something settling into place — like a warranty being registered.</div>
+        </div>
+        <div class="motion-rule">
+          <div class="motion-rule-name">200ms standard</div>
+          <div class="motion-rule-desc">Default transition duration for interactive elements. Fast enough to feel responsive. Slow enough to feel considered.</div>
+        </div>
+        <div class="motion-rule">
+          <div class="motion-rule-name">jade pulse</div>
+          <div class="motion-rule-desc">The only decorative animation: a single jade pulse on the status dot when a warranty is confirmed. One beat. Not a loop.</div>
+        </div>
+        <div class="motion-rule">
+          <div class="motion-rule-name">no bounce</div>
+          <div class="motion-rule-desc">Paxr never bounces. Spring animations signal playfulness. Paxr is settled, certain, resolved. Ease only.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VOICE PRINCIPLES (inline script for the voice list) -->
+<section>
+  <div class="section-label">07 · In the world</div>
+  <div class="section-title">How Paxr introduces itself.</div>
+  <p style="max-width:560px;color:#4A5E6E;margin-bottom:32px;">The first thing a new user hears from Paxr sets the tone for every interaction that follows. This is that moment.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex-wrap:wrap;">
+    <!-- WhatsApp first message -->
+    <div>
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;">WhatsApp — first message</div>
+      <div style="background:#ECE5DD;border-radius:12px;padding:20px;font-family:var(--f-body);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.08);">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--jade);display:flex;align-items:center;justify-content:center;font-family:var(--f-head);font-size:14px;font-weight:700;color:var(--deep);">P</div>
+          <div>
+            <div style="font-size:14px;font-weight:500;color:#000;">Paxr</div>
+            <div style="font-size:11px;color:#667;">online</div>
+          </div>
+        </div>
+        <div style="background:white;border-radius:0 10px 10px 10px;padding:12px 14px;max-width:85%;font-size:13px;color:#111;line-height:1.55;box-shadow:0 1px 2px rgba(0,0,0,0.1);">
+          Hi Marcus. I'm Paxr — your warranty agent.<br><br>
+          You've registered 3 warranties so far. Your Hoover washing machine expires in 23 days.<br><br>
+          Want me to handle the renewal? It's £29 for 2 more years.
+          <div style="font-size:10px;color:#999;text-align:right;margin-top:6px;">09:14 ✓✓</div>
+        </div>
+        <div style="background:#DCF8C6;border-radius:10px 10px 0 10px;padding:12px 14px;max-width:75%;margin-left:auto;margin-top:10px;font-size:13px;color:#111;line-height:1.55;box-shadow:0 1px 2px rgba(0,0,0,0.1);">
+          Yes please
+          <div style="font-size:10px;color:#999;text-align:right;margin-top:6px;">09:15 ✓✓</div>
+        </div>
+        <div style="background:white;border-radius:0 10px 10px 10px;padding:12px 14px;max-width:85%;font-size:13px;color:#111;line-height:1.55;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:10px;">
+          Done. Hoover H-Wash covered until Nov 2027. Certificate sent to your email.
+          <div style="font-size:10px;color:#999;text-align:right;margin-top:6px;">09:15 ✓✓</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- App onboarding -->
+    <div>
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;">App — onboarding screen</div>
+      <div style="background:var(--deep);border-radius:24px;padding:40px 28px;min-height:360px;display:flex;flex-direction:column;justify-content:space-between;">
+        <div>
+          <div style="font-family:var(--f-head);font-size:13px;font-weight:700;color:var(--stone);letter-spacing:0.06em;margin-bottom:48px;">paxr</div>
+          <div style="font-family:var(--f-head);font-size:36px;font-weight:700;color:var(--stone);line-height:1.1;margin-bottom:16px;">Your warranties.<br>Finally <span style="color:var(--jade);">handled.</span></div>
+          <div style="font-size:14px;color:var(--mist);line-height:1.6;">Scan a QR code. Or add manually. Paxr watches every warranty and acts before they expire.</div>
+        </div>
+        <div>
+          <div style="background:var(--jade);color:var(--deep);padding:16px;border-radius:10px;text-align:center;font-size:15px;font-weight:500;margin-bottom:10px;cursor:pointer;">Scan your first warranty</div>
+          <div style="color:var(--mist);text-align:center;font-size:13px;cursor:pointer;">Add manually instead</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">pax<span>r</span></div>
+  <p style="margin-bottom:6px;">Brand Identity v1.0 · April 2026</p>
+  <p>getpaxr.com · Peace, handled.</p>
+</footer>
+
+<script>
+// Voice principles inline render
+const container = document.querySelector('section:nth-of-type(5) div:last-child');
+if(container && container.innerHTML.includes('{[')){
+  const principles = ["Active not passive","Specific not vague","One sentence over three","State facts. Ask one thing.","Never exclaim."];
+  container.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px;">
+    ${principles.map((p,i)=>`<div style="background:white;border:1px solid rgba(26,42,56,0.08);border-radius:8px;padding:16px 18px;">
+      <div style="font-family:'Courier Prime',monospace;font-size:10px;color:#8FA3B1;margin-bottom:6px;">0${i+1}</div>
+      <div style="font-size:14px;font-weight:500;color:#1A2A38;">${p}</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// Dark section rules render
+const darkRules = document.querySelectorAll('.dark-inner div');
+darkRules.forEach(el=>{
+  if(el.innerHTML && el.innerHTML.includes('{[')){
+    const rules = [
+      {n:"01",title:"Always lowercase",rule:"The wordmark is always 'paxr' — never 'Paxr', never 'PAXR'. Lowercase is intentional. It signals approachability within authority."},
+      {n:"02",title:"Jade for resolution only",rule:"Jade is the 'handled' colour. Use it only when something is confirmed, completed, or active. Never as decoration. Scarcity is its power."},
+      {n:"03",title:"One serif, one sans",rule:"Fraunces for headings. DM Sans for everything else. Never mix another typeface into the brand without a deliberate reason."},
+      {n:"04",title:"No exclamation marks",rule:"Paxr never shouts. It states. 'Done.' not 'Done!' The absence of exclamation is itself a brand signal — confidence doesn't need punctuation."},
+      {n:"05",title:"Amber means attention needed",rule:"Amber is not decorative. It means the user needs to act. Never use it to highlight a feature or for aesthetics."},
+      {n:"06",title:"Minimum clear space = x",rule:"The clear space around the wordmark is always equal to the height of the 'x' in paxr. Nothing enters that space — not on any medium."},
+    ];
+    el.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:32px;">
+      ${rules.map(r=>`<div style="background:rgba(246,245,241,0.04);border:1px solid rgba(246,245,241,0.08);border-radius:8px;padding:20px;">
+        <div style="font-family:'Courier Prime',monospace;font-size:10px;color:rgba(246,245,241,0.25);margin-bottom:10px;">${r.n}</div>
+        <div style="font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#F6F5F1;margin-bottom:8px;">${r.title}</div>
+        <div style="font-size:13px;color:rgba(246,245,241,0.5);line-height:1.65;">${r.rule}</div>
+      </div>`).join('')}
+    </div>`;
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Paxr — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,600&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── PRINT STYLES ──────────────────────────────────── */
+@page { size: A4; margin: 14mm 12mm; }
+@media print {
+  html, body { background: #fff !important; font-size: 11px; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .nav { position: static !important; backdrop-filter: none !important; background: #fff !important; }
+  /* Start each numbered block on its own page */
+  section.block { padding: 0 !important; break-before: page; page-break-before: always; break-inside: avoid-page; border-bottom: none !important; }
+  header.hero { break-after: page; page-break-after: always; padding: 40px 0 60px !important; min-height: 80vh; }
+  footer { break-before: page; page-break-before: always; padding: 40px 0 !important; }
+  /* Keep grids together where possible */
+  .palette, .logo-grid, .voice-grid, .type-row, .comp-row, .scale-table, .code-wrap, .usage-bar, .donts, .spec-grid, .screens { break-inside: avoid; page-break-inside: avoid; }
+  /* Phones are tall — shrink them */
+  .phone { max-width: 220px !important; box-shadow: none !important; }
+  .screens { gap: 16px !important; }
+  /* Block heads shouldn't detach from content */
+  .block-head { break-after: avoid; page-break-after: avoid; margin-bottom: 28px !important; padding-top: 24px !important; }
+  /* Tone down big display type for print */
+  .hero h1 { font-size: 72px !important; }
+  .sp-display { font-size: 64px !important; }
+  .h-section { font-size: 34px !important; }
+  .foot-tag { font-size: 44px !important; }
+  /* Dark sections print with their colour background */
+  section.block.dark, header.hero, footer { color: var(--paxr-stone) !important; }
+  /* Hide scrollbars */
+  .vault-scroll::-webkit-scrollbar { display: none; }
+  /* Avoid breaking inside cards */
+  .wcard, .phone, .notif, .code-card, .swatch, .logo-cell, .dont-cell, .voice-item, .bubble { break-inside: avoid; page-break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+  /* Hide copy buttons */
+  .copy { display: none !important; }
+  /* Block head was 2-col; on print, single col is cleaner for wider type */
+  .block-head { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+}
+/* ── TOKENS ─────────────────────────────────────────── */
+:root{
+  --paxr-deep:#0E1B29;
+  --paxr-depth:#1C2E40;
+  --paxr-depth-2:#26405A;
+  --paxr-jade:#3EC99A;
+  --paxr-jade-dim:#2D9A76;
+  --paxr-jade-soft:rgba(62,201,154,0.08);
+  --paxr-stone:#F6F5F1;
+  --paxr-pale:#EAE9E4;
+  --paxr-line:#E0DED7;
+  --paxr-mist:#8FA3B1;
+  --paxr-mist-2:#B9C5CD;
+  --paxr-amber:#E8A020;
+  --paxr-amber-soft:rgba(232,160,32,0.1);
+  --paxr-error:#C0392B;
+  --paxr-error-soft:rgba(192,57,43,0.08);
+
+  --f-display:'Fraunces',ui-serif,Georgia,serif;
+  --f-body:'DM Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-6:24px;
+  --s-8:32px; --s-12:48px; --s-16:64px; --s-24:96px;
+
+  --r-sm:6px; --r-md:8px; --r-lg:12px; --r-xl:20px; --r-full:9999px;
+
+  --max:1200px;
+  --ease:cubic-bezier(0.2,0.6,0.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:var(--paxr-stone);color:var(--paxr-deep);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+::selection{background:var(--paxr-jade);color:var(--paxr-deep);}
+
+/* ── UTILITIES ──────────────────────────────────────── */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 40px;}
+.eyebrow{font-family:var(--f-body);font-size:10.5px;font-weight:500;letter-spacing:0.24em;text-transform:uppercase;color:var(--paxr-mist);display:inline-flex;align-items:center;gap:12px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--paxr-mist);}
+.eyebrow.on-dark{color:var(--paxr-mist-2);}
+.eyebrow.on-dark::before{background:var(--paxr-mist-2);}
+.mono{font-family:var(--f-mono);font-feature-settings:"ss01";}
+.serif{font-family:var(--f-display);font-style:italic;font-weight:300;}
+.h-display{font-family:var(--f-display);font-weight:600;font-size:clamp(44px,6vw,92px);line-height:1.0;letter-spacing:-0.025em;color:var(--paxr-deep);}
+.h-section{font-family:var(--f-display);font-weight:600;font-size:clamp(32px,3.6vw,52px);line-height:1.05;letter-spacing:-0.02em;color:var(--paxr-deep);}
+.h-sub{font-family:var(--f-display);font-weight:600;font-size:24px;line-height:1.2;letter-spacing:-0.015em;}
+.lead{font-size:18px;line-height:1.55;color:#4A5E6E;max-width:640px;font-weight:400;}
+.small{font-size:13px;color:#4A5E6E;line-height:1.55;}
+
+/* ── TOP NAV ────────────────────────────────────────── */
+.nav{position:sticky;top:0;z-index:100;background:rgba(246,245,241,0.88);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--paxr-line);}
+.nav-inner{max-width:var(--max);margin:0 auto;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.nav-logo{font-family:var(--f-display);font-weight:900;font-size:22px;letter-spacing:0.04em;color:var(--paxr-deep);}
+.nav-logo span{color:var(--paxr-jade);}
+.nav-links{display:flex;gap:24px;flex-wrap:wrap;}
+.nav-link{font-size:13px;color:var(--paxr-deep);text-decoration:none;opacity:0.7;transition:opacity var(--ease) 0.15s;}
+.nav-link:hover{opacity:1;}
+.nav-meta{display:flex;gap:16px;align-items:center;font-size:11px;color:var(--paxr-mist);letter-spacing:0.1em;text-transform:uppercase;}
+.nav-meta b{color:var(--paxr-jade-dim);font-weight:500;}
+
+/* ── HERO ───────────────────────────────────────────── */
+.hero{background:var(--paxr-deep);color:var(--paxr-stone);padding:120px 0 140px;position:relative;overflow:hidden;}
+.hero-wrap{max-width:var(--max);margin:0 auto;padding:0 40px;position:relative;}
+.hero-head{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:end;}
+.hero-eyebrow{color:rgba(246,245,241,0.5);font-size:11px;letter-spacing:0.26em;text-transform:uppercase;margin-bottom:28px;display:flex;gap:14px;align-items:center;}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:rgba(246,245,241,0.4);}
+.hero h1{font-family:var(--f-display);font-weight:600;font-size:clamp(60px,8.5vw,140px);line-height:0.95;letter-spacing:-0.035em;color:var(--paxr-stone);}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--paxr-jade);}
+.hero-side{padding-bottom:24px;}
+.hero-tagline{font-family:var(--f-display);font-style:italic;font-weight:300;font-size:22px;color:rgba(246,245,241,0.75);line-height:1.4;margin-bottom:24px;}
+.hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(246,245,241,0.1);border:1px solid rgba(246,245,241,0.1);}
+.hero-meta-cell{background:var(--paxr-deep);padding:16px 18px;}
+.hero-meta-cell .k{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(246,245,241,0.4);margin-bottom:4px;}
+.hero-meta-cell .v{font-family:var(--f-mono);font-size:13px;color:var(--paxr-stone);}
+
+.hero-mark{position:absolute;right:40px;top:80px;opacity:0.15;}
+
+/* ── SECTION SHELL ─────────────────────────────────── */
+section.block{padding:100px 0;border-bottom:1px solid var(--paxr-line);}
+section.block.dark{background:var(--paxr-deep);color:var(--paxr-stone);border-color:rgba(246,245,241,0.08);}
+section.block.dark .h-section,section.block.dark .h-sub{color:var(--paxr-stone);}
+section.block.dark .lead{color:rgba(246,245,241,0.7);}
+.block-head{margin-bottom:56px;max-width:var(--max);margin-left:auto;margin-right:auto;padding:0 40px;display:grid;grid-template-columns:1.3fr 1fr;gap:60px;align-items:end;}
+.block-head .lead{justify-self:start;}
+.block-num{font-family:var(--f-mono);font-size:11px;letter-spacing:0.2em;color:var(--paxr-mist);margin-bottom:12px;}
+section.block.dark .block-num{color:var(--paxr-mist-2);}
+
+/* ── COLOUR SECTION ─────────────────────────────────── */
+.palette{max-width:var(--max);margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--paxr-line);border:1px solid var(--paxr-line);}
+section.block.dark .palette{background:rgba(246,245,241,0.1);border-color:rgba(246,245,241,0.1);}
+.swatch{background:var(--paxr-stone);padding:0;min-height:240px;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+section.block.dark .swatch{background:var(--paxr-deep);}
+.swatch-chip{flex:1;min-height:140px;position:relative;}
+.swatch-body{padding:18px 20px 22px;}
+.sw-name{font-family:var(--f-display);font-weight:600;font-size:16px;margin-bottom:2px;}
+.sw-role{font-size:12px;color:var(--paxr-mist);line-height:1.5;margin-top:6px;max-width:200px;}
+section.block.dark .sw-role{color:var(--paxr-mist-2);}
+.sw-hex{font-family:var(--f-mono);font-size:11px;color:var(--paxr-mist);letter-spacing:0.04em;}
+section.block.dark .sw-hex{color:var(--paxr-mist-2);}
+.swatch.feature{grid-column:span 2;}
+.swatch.feature .swatch-chip{min-height:220px;display:flex;align-items:flex-end;padding:24px;}
+.swatch.feature .chip-label{font-family:var(--f-display);font-style:italic;font-weight:300;font-size:34px;line-height:1;}
+
+/* Usage bar under palette */
+.usage-bar{max-width:var(--max);margin:28px auto 0;padding:0 40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;}
+.usage-rule{border-top:1px solid var(--paxr-line);padding-top:16px;font-size:13px;color:#4A5E6E;line-height:1.55;}
+.usage-rule b{display:block;color:var(--paxr-deep);font-weight:500;margin-bottom:4px;font-size:14px;}
+section.block.dark .usage-rule{color:rgba(246,245,241,0.7);border-color:rgba(246,245,241,0.12);}
+section.block.dark .usage-rule b{color:var(--paxr-stone);}
+
+/* ── TYPOGRAPHY ─────────────────────────────────────── */
+.type-stack{max-width:var(--max);margin:0 auto;padding:0 40px;}
+.type-row{display:grid;grid-template-columns:180px 1fr;gap:40px;padding:32px 0;border-top:1px solid var(--paxr-line);align-items:baseline;}
+.type-row:first-child{border-top:none;padding-top:0;}
+.type-meta{font-size:12px;color:var(--paxr-mist);line-height:1.5;}
+.type-meta b{display:block;color:var(--paxr-deep);font-family:var(--f-mono);font-weight:500;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:8px;}
+.type-meta .m{font-family:var(--f-mono);color:var(--paxr-deep);margin-top:6px;}
+.type-specimen{min-width:0;}
+.sp-display{font-family:var(--f-display);font-weight:900;font-size:120px;line-height:0.9;letter-spacing:-0.035em;}
+.sp-display em{font-style:italic;font-weight:300;color:var(--paxr-jade-dim);}
+.sp-section{font-family:var(--f-display);font-weight:600;font-size:44px;line-height:1.05;letter-spacing:-0.02em;}
+.sp-section em{font-style:italic;font-weight:300;}
+.sp-agent{font-family:var(--f-display);font-weight:300;font-style:italic;font-size:26px;line-height:1.4;color:#2A3B4C;}
+.sp-lead{font-size:20px;line-height:1.5;color:var(--paxr-deep);max-width:540px;}
+.sp-body{font-size:15px;line-height:1.65;max-width:520px;color:#2A3B4C;}
+.sp-label{font-family:var(--f-body);font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--paxr-mist);}
+.sp-mono{font-family:var(--f-mono);font-size:14px;letter-spacing:0.02em;}
+
+/* Type scale table */
+.scale-table{max-width:var(--max);margin:48px auto 0;padding:0 40px;}
+.scale-table table{width:100%;border-collapse:collapse;font-size:13px;}
+.scale-table th{text-align:left;font-family:var(--f-mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--paxr-mist);padding:10px 16px;border-bottom:1px solid var(--paxr-line);font-weight:500;}
+.scale-table td{padding:14px 16px;border-bottom:1px solid var(--paxr-line);vertical-align:middle;}
+.scale-table td:first-child{font-family:var(--f-mono);font-weight:500;}
+.scale-table td:nth-child(2){color:#2A3B4C;}
+.scale-table td:nth-child(3){font-family:var(--f-mono);color:var(--paxr-mist);font-size:12px;}
+
+/* ── SPACING / RADII ────────────────────────────────── */
+.spec-grid{max-width:var(--max);margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+.spec-col h4{font-family:var(--f-display);font-weight:600;font-size:20px;margin-bottom:20px;}
+.spacing-rows{display:flex;flex-direction:column;gap:10px;}
+.spacing-row{display:grid;grid-template-columns:80px 1fr 70px;align-items:center;gap:16px;font-size:13px;}
+.spacing-row .k{font-family:var(--f-mono);font-size:12px;color:var(--paxr-mist);}
+.spacing-bar{height:10px;background:var(--paxr-jade);border-radius:2px;}
+.spacing-row .v{font-family:var(--f-mono);font-size:11px;color:#4A5E6E;text-align:right;}
+
+.radii{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+.radius-cell{aspect-ratio:1;background:var(--paxr-deep);color:var(--paxr-stone);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+.radius-cell .r{font-family:var(--f-mono);font-size:12px;font-weight:500;}
+.radius-cell .v{font-family:var(--f-mono);font-size:10px;color:var(--paxr-mist-2);}
+
+/* ── LOGO SECTION ───────────────────────────────────── */
+.logo-grid{max-width:var(--max);margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--paxr-line);border:1px solid var(--paxr-line);}
+.logo-cell{background:var(--paxr-stone);padding:56px 40px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;gap:32px;}
+.logo-cell.dark{background:var(--paxr-deep);color:var(--paxr-stone);}
+.logo-cell .logo-stage{flex:1;width:100%;display:flex;align-items:center;justify-content:center;}
+.logo-cell .logo-caption{font-size:12px;color:var(--paxr-mist);letter-spacing:0.04em;display:flex;justify-content:space-between;width:100%;font-family:var(--f-mono);}
+.logo-cell.dark .logo-caption{color:var(--paxr-mist-2);}
+.wm{font-family:var(--f-display);font-weight:900;color:var(--paxr-deep);letter-spacing:0.04em;line-height:1;}
+.wm.light{color:var(--paxr-stone);}
+.wm .dot{color:var(--paxr-jade);}
+.wm.big{font-size:86px;}
+.wm.med{font-size:54px;}
+.wm.sm{font-size:34px;}
+.wm-inline{display:inline-flex;align-items:baseline;gap:14px;}
+.wm-inline .tag{font-family:var(--f-display);font-weight:300;font-style:italic;font-size:22px;color:var(--paxr-mist);letter-spacing:0;}
+
+/* Symbol mark SVG sizing */
+.mark-stage{display:flex;align-items:center;gap:32px;}
+
+/* Logo don't grid */
+.donts{max-width:var(--max);margin:40px auto 0;padding:0 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.dont-cell{border:1px solid var(--paxr-line);border-radius:var(--r-md);padding:22px;aspect-ratio:1;display:flex;flex-direction:column;justify-content:space-between;background:var(--paxr-stone);}
+.dont-cell .x{width:22px;height:22px;border-radius:var(--r-full);background:var(--paxr-error-soft);color:var(--paxr-error);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;}
+.dont-cell .preview{flex:1;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-weight:900;color:var(--paxr-deep);}
+.dont-cell .label{font-size:11px;color:var(--paxr-mist);line-height:1.45;}
+
+/* ── COMPONENTS ─────────────────────────────────────── */
+.comp-section{max-width:var(--max);margin:0 auto;padding:0 40px;}
+.comp-row{display:grid;grid-template-columns:260px 1fr;gap:48px;padding:40px 0;border-top:1px solid var(--paxr-line);}
+.comp-row:first-of-type{border-top:none;padding-top:8px;}
+.comp-aside h4{font-family:var(--f-display);font-weight:600;font-size:20px;margin-bottom:10px;letter-spacing:-0.01em;}
+.comp-aside p{font-size:13px;color:#4A5E6E;line-height:1.55;margin-bottom:14px;}
+.comp-aside .specs{display:flex;flex-direction:column;gap:4px;font-family:var(--f-mono);font-size:11px;color:var(--paxr-mist);}
+.comp-aside .specs span{display:block;}
+.comp-stage{background:var(--paxr-stone);border:1px solid var(--paxr-line);border-radius:var(--r-md);padding:40px;min-height:200px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;}
+.comp-stage.dark{background:var(--paxr-deep);border-color:rgba(246,245,241,0.1);}
+.comp-stage.pale{background:var(--paxr-pale);}
+.comp-stage.align-start{justify-content:flex-start;}
+.comp-stage.column{flex-direction:column;align-items:stretch;gap:16px;}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:var(--r-md);font-family:var(--f-body);font-weight:500;font-size:14px;letter-spacing:0;border:0;cursor:pointer;transition:all 0.15s var(--ease);text-decoration:none;line-height:1;}
+.btn-primary{background:var(--paxr-jade);color:var(--paxr-deep);}
+.btn-primary:hover{background:#35B789;transform:translateY(-1px);}
+.btn-secondary{background:var(--paxr-deep);color:var(--paxr-stone);}
+.btn-secondary:hover{background:#1A2E43;transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--paxr-deep);border:1.5px solid var(--paxr-deep);}
+.btn-ghost:hover{background:var(--paxr-deep);color:var(--paxr-stone);}
+.btn-ghost.on-dark{color:var(--paxr-stone);border-color:var(--paxr-stone);}
+.btn-ghost.on-dark:hover{background:var(--paxr-stone);color:var(--paxr-deep);}
+.btn-text{background:none;padding:12px 0;color:var(--paxr-jade-dim);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;}
+.btn-text.on-dark{color:var(--paxr-jade);}
+.btn-sm{padding:10px 16px;font-size:13px;}
+.btn-lg{padding:18px 28px;font-size:15px;}
+.btn-disabled{opacity:0.4;cursor:not-allowed;}
+.btn .arrow{display:inline-block;transition:transform 0.15s var(--ease);}
+.btn:hover .arrow{transform:translateX(3px);}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--r-full);font-size:10.5px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;font-family:var(--f-body);}
+.badge::before{content:'';width:6px;height:6px;border-radius:50%;}
+.badge.active{background:rgba(62,201,154,0.12);color:var(--paxr-jade-dim);}
+.badge.active::before{background:var(--paxr-jade);}
+.badge.expiring{background:rgba(232,160,32,0.12);color:#B8800A;}
+.badge.expiring::before{background:var(--paxr-amber);}
+.badge.expired{background:rgba(192,57,43,0.1);color:var(--paxr-error);}
+.badge.expired::before{background:var(--paxr-error);}
+.badge.claimed{background:rgba(14,27,41,0.08);color:var(--paxr-deep);}
+.badge.claimed::before{background:var(--paxr-deep);}
+
+/* Input */
+.input-field{display:flex;flex-direction:column;gap:8px;min-width:260px;}
+.input-field label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--paxr-mist);font-weight:500;}
+.input-field input{background:#fff;border:1px solid var(--paxr-line);border-radius:var(--r-md);padding:14px 16px;font-family:var(--f-body);font-size:15px;color:var(--paxr-deep);transition:border-color 0.15s var(--ease);}
+.input-field input:focus{outline:none;border-color:var(--paxr-deep);}
+.input-field input:focus.with-ring{box-shadow:0 0 0 3px rgba(62,201,154,0.2);}
+.input-field.error input{border-color:var(--paxr-error);}
+.input-field .hint{font-size:12px;color:var(--paxr-mist);}
+.input-field.error .hint{color:var(--paxr-error);}
+
+/* Chat bubbles */
+.chat-stage{display:flex;flex-direction:column;gap:10px;max-width:440px;}
+.bubble{padding:14px 18px;font-size:14px;line-height:1.5;max-width:86%;}
+.bubble.paxr{background:var(--paxr-deep);color:var(--paxr-stone);border-radius:4px 14px 14px 14px;align-self:flex-start;}
+.bubble.user{background:var(--paxr-jade);color:var(--paxr-deep);border-radius:14px 4px 14px 14px;align-self:flex-end;}
+.bubble .who{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(246,245,241,0.5);margin-bottom:4px;}
+.bubble.user .who{color:rgba(14,27,41,0.55);text-align:right;}
+.bubble .mono-inline{font-family:var(--f-mono);font-size:13px;}
+
+/* Notifications */
+.notif{background:#fff;border:1px solid var(--paxr-line);border-radius:var(--r-lg);padding:16px 18px;display:flex;gap:14px;align-items:flex-start;max-width:420px;}
+.notif-icon{width:36px;height:36px;border-radius:var(--r-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-weight:700;font-size:16px;}
+.notif.success .notif-icon{background:rgba(62,201,154,0.15);color:var(--paxr-jade-dim);}
+.notif.warn .notif-icon{background:rgba(232,160,32,0.15);color:#B8800A;}
+.notif.err .notif-icon{background:rgba(192,57,43,0.1);color:var(--paxr-error);}
+.notif-body{min-width:0;}
+.notif-title{font-weight:500;font-size:14px;margin-bottom:2px;color:var(--paxr-deep);}
+.notif-body p{font-size:13px;color:#4A5E6E;line-height:1.55;}
+.notif-time{font-family:var(--f-mono);font-size:10px;color:var(--paxr-mist);margin-top:6px;letter-spacing:0.08em;}
+
+/* Warranty card (anchor component) */
+.wcard{background:#fff;border-radius:var(--r-lg);padding:20px 22px 22px;width:260px;position:relative;overflow:hidden;border:1px solid var(--paxr-line);}
+.wcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--paxr-jade);}
+.wcard.expiring::before{background:var(--paxr-amber);}
+.wcard.expired::before{background:var(--paxr-error);}
+.wcard .brand{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--paxr-mist);margin-bottom:8px;font-weight:500;}
+.wcard .product{font-family:var(--f-display);font-weight:600;font-size:18px;line-height:1.2;letter-spacing:-0.01em;margin-bottom:22px;color:var(--paxr-deep);min-height:44px;}
+.wcard .countdown{display:flex;align-items:baseline;gap:6px;margin-bottom:16px;}
+.wcard .days{font-family:var(--f-mono);font-size:32px;font-weight:500;color:var(--paxr-jade-dim);line-height:1;}
+.wcard.expiring .days{color:#B8800A;}
+.wcard.expired .days{color:var(--paxr-error);}
+.wcard .unit{font-size:12px;color:var(--paxr-mist);letter-spacing:0.04em;}
+.wcard .foot{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--paxr-line);}
+.wcard .foot .date{font-family:var(--f-mono);font-size:11px;color:var(--paxr-mist);}
+
+/* Data / code display */
+.code-wrap{max-width:var(--max);margin:40px auto 0;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.code-card{background:var(--paxr-deep);border-radius:var(--r-lg);padding:22px 24px;position:relative;}
+.code-card.light{background:var(--paxr-pale);}
+.code-card .label{font-family:var(--f-mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(246,245,241,0.4);margin-bottom:14px;}
+.code-card.light .label{color:var(--paxr-mist);}
+.code-card pre{font-family:var(--f-mono);font-size:12px;color:var(--paxr-stone);white-space:pre;line-height:1.7;overflow-x:auto;}
+.code-card.light pre{color:var(--paxr-deep);}
+.code-card .copy{position:absolute;top:18px;right:18px;background:rgba(246,245,241,0.08);color:var(--paxr-stone);border:0;padding:4px 10px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;border-radius:4px;font-family:var(--f-body);font-weight:500;transition:background 0.15s var(--ease);}
+.code-card .copy:hover{background:rgba(246,245,241,0.16);}
+.code-card.light .copy{background:rgba(14,27,41,0.08);color:var(--paxr-deep);}
+.code-card.light .copy:hover{background:rgba(14,27,41,0.16);}
+
+/* ── VOICE ──────────────────────────────────────────── */
+.voice-grid{max-width:var(--max);margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--paxr-line);border:1px solid var(--paxr-line);}
+.voice-col{background:var(--paxr-stone);padding:40px;}
+.voice-col.right{background:var(--paxr-stone);}
+.voice-col h5{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:28px;font-weight:500;display:flex;align-items:center;gap:10px;}
+.voice-col.left h5{color:var(--paxr-jade-dim);}
+.voice-col.right h5{color:var(--paxr-error);}
+.voice-item{padding:18px 0;border-top:1px solid var(--paxr-line);display:grid;grid-template-columns:40px 1fr;gap:16px;}
+.voice-item:first-of-type{border-top:none;padding-top:0;}
+.voice-item .m{font-family:var(--f-display);font-weight:600;font-size:22px;line-height:1;}
+.voice-col.left .voice-item .m{color:var(--paxr-jade-dim);}
+.voice-col.right .voice-item .m{color:var(--paxr-error);text-decoration:line-through;}
+.voice-item .body b{display:block;font-weight:500;font-size:13px;margin-bottom:4px;}
+.voice-item .body .ex{font-family:var(--f-display);font-style:italic;font-weight:300;font-size:17px;color:var(--paxr-deep);line-height:1.35;}
+.voice-col.right .voice-item .body .ex{color:#4A5E6E;}
+.voice-item .body .note{font-size:12px;color:var(--paxr-mist);margin-top:4px;}
+
+/* ── SCREEN MOCKS ───────────────────────────────────── */
+.screens{max-width:var(--max);margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;align-items:start;}
+.phone{background:var(--paxr-deep);border-radius:40px;padding:10px;aspect-ratio:393/852;max-width:300px;margin:0 auto;width:100%;box-shadow:0 40px 80px -30px rgba(14,27,41,0.35);min-width:0;}
+.phone-screen{background:var(--paxr-stone);border-radius:32px;overflow:hidden;height:100%;display:flex;flex-direction:column;position:relative;min-width:0;}
+.phone-screen.dark{background:var(--paxr-deep);color:var(--paxr-stone);}
+.status-bar{padding:12px 24px 6px;display:flex;justify-content:space-between;align-items:center;font-size:11px;font-family:var(--f-body);font-weight:600;color:var(--paxr-deep);flex-shrink:0;}
+.phone-screen.dark .status-bar{color:var(--paxr-stone);}
+.status-bar .dots{display:flex;gap:3px;align-items:center;}
+.status-bar .dots i{width:3px;height:3px;background:currentColor;border-radius:50%;display:block;opacity:0.7;}
+.status-bar .dots i:last-child{opacity:1;}
+.notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:90px;height:26px;background:var(--paxr-deep);border-radius:14px;z-index:2;}
+.phone-screen.dark .notch{background:#000;}
+
+/* App header inside phone */
+.app-head{padding:10px 16px 12px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.app-head .wm{font-size:24px;}
+.app-head .avatar{width:32px;height:32px;border-radius:50%;background:var(--paxr-pale);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--paxr-deep);font-family:var(--f-display);}
+.phone-screen.dark .app-head .avatar{background:var(--paxr-depth);color:var(--paxr-stone);}
+.summary{padding:0 16px 14px;font-size:11px;color:var(--paxr-mist);flex-shrink:0;}
+.summary b{color:var(--paxr-deep);font-weight:500;}
+.phone-screen.dark .summary b{color:var(--paxr-stone);}
+
+/* Section header inside vault */
+.vault-sec{padding:4px 16px 10px;min-width:0;}
+.vault-sec .sh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+.vault-sec .sh .t{font-family:var(--f-body);font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;}
+.vault-sec .sh .t.j{color:var(--paxr-jade-dim);}
+.vault-sec .sh .t.a{color:#B8800A;}
+.vault-sec .sh .c{font-family:var(--f-mono);font-size:11px;color:var(--paxr-mist);}
+.vault-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;min-width:0;}
+.vault-scroll::-webkit-scrollbar{display:none;}
+.mini-card{width:150px;min-width:150px;background:#fff;border-radius:12px;padding:12px 12px 12px;position:relative;overflow:hidden;flex-shrink:0;border:1px solid var(--paxr-line);}
+.mini-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--paxr-jade);}
+.mini-card.a::before{background:var(--paxr-amber);}
+.mini-card .b{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--paxr-mist);margin-bottom:6px;font-weight:500;}
+.mini-card .p{font-family:var(--f-display);font-weight:600;font-size:13px;line-height:1.2;margin-bottom:10px;min-height:30px;color:var(--paxr-deep);}
+.mini-card .d{font-family:var(--f-mono);font-size:20px;font-weight:500;color:var(--paxr-jade-dim);line-height:1;margin-bottom:2px;}
+.mini-card.a .d{color:#B8800A;}
+.mini-card .u{font-size:10px;color:var(--paxr-mist);}
+
+/* Tab bar */
+.tab-bar{margin-top:auto;background:var(--paxr-deep);padding:12px 24px 20px;display:flex;justify-content:space-around;align-items:center;flex-shrink:0;}
+.tab{display:flex;flex-direction:column;align-items:center;gap:4px;color:rgba(246,245,241,0.4);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
+.tab.active{color:var(--paxr-jade);}
+.tab svg{width:22px;height:22px;}
+
+/* QR scan screen */
+.scan-stage{flex:1;background:#0A1620;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.scan-stage::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(circle at 30% 20%,rgba(255,255,255,0.04) 0,transparent 40%),
+  radial-gradient(circle at 70% 70%,rgba(62,201,154,0.06) 0,transparent 50%);}
+.scan-frame{width:56%;aspect-ratio:1;position:relative;}
+.scan-frame::before,.scan-frame::after,.scan-corner::before,.scan-corner::after{content:'';position:absolute;width:28px;height:28px;border-color:var(--paxr-jade);border-style:solid;border-width:0;}
+.scan-frame::before{top:0;left:0;border-top-width:2px;border-left-width:2px;}
+.scan-frame::after{top:0;right:0;border-top-width:2px;border-right-width:2px;}
+.scan-corner::before{bottom:0;left:0;border-bottom-width:2px;border-left-width:2px;}
+.scan-corner::after{bottom:0;right:0;border-bottom-width:2px;border-right-width:2px;}
+.scan-hint{position:absolute;bottom:80px;left:0;right:0;text-align:center;color:rgba(246,245,241,0.85);font-size:12px;padding:0 40px;}
+.scan-alt{position:absolute;bottom:40px;left:0;right:0;text-align:center;font-size:11px;color:var(--paxr-jade);text-decoration:underline;text-underline-offset:3px;}
+.scan-close{position:absolute;top:64px;left:20px;width:32px;height:32px;border-radius:50%;background:rgba(10,22,32,0.6);color:var(--paxr-stone);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.scan-title{position:absolute;top:66px;left:0;right:0;text-align:center;color:var(--paxr-stone);font-size:13px;font-weight:500;}
+
+/* Empty state */
+.empty-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;text-align:center;gap:14px;min-height:0;}
+.empty-body .eh{font-family:var(--f-display);font-weight:600;font-size:22px;letter-spacing:-0.015em;color:var(--paxr-deep);}
+.empty-body .es{font-size:13px;color:var(--paxr-mist);max-width:220px;line-height:1.55;}
+.empty-body .mark{margin-bottom:8px;}
+.empty-cta{padding:0 16px 16px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;}
+.empty-cta .btn{justify-content:center;width:100%;padding:12px;font-size:13px;}
+
+/* Agent chat screen */
+.agent-body{flex:1;padding:16px 16px 80px;display:flex;flex-direction:column;gap:10px;overflow:hidden;}
+.agent-body .bubble{font-size:13px;padding:11px 14px;}
+.agent-meta{font-size:10px;color:var(--paxr-mist);text-align:center;padding:8px 0;}
+.agent-input{position:absolute;bottom:0;left:0;right:0;padding:12px 16px 24px;background:var(--paxr-stone);border-top:1px solid var(--paxr-line);display:flex;gap:8px;align-items:center;}
+.agent-input .f{flex:1;background:#fff;border:1px solid var(--paxr-line);border-radius:var(--r-full);padding:10px 16px;font-size:13px;color:var(--paxr-mist);}
+.agent-input .send{width:36px;height:36px;border-radius:50%;background:var(--paxr-jade);color:var(--paxr-deep);display:flex;align-items:center;justify-content:center;font-size:14px;}
+
+/* Phone caption */
+.phone-caption{text-align:center;margin-top:20px;}
+.phone-caption .n{font-family:var(--f-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--paxr-mist);margin-bottom:6px;}
+.phone-caption .t{font-family:var(--f-display);font-weight:600;font-size:16px;}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer{background:var(--paxr-deep);color:var(--paxr-stone);padding:120px 0 80px;}
+.foot-wrap{max-width:var(--max);margin:0 auto;padding:0 40px;}
+.foot-hero{display:grid;grid-template-columns:1.3fr 1fr;gap:80px;align-items:end;margin-bottom:80px;}
+.foot-tag{font-family:var(--f-display);font-weight:600;font-size:clamp(48px,6vw,92px);line-height:0.95;letter-spacing:-0.03em;}
+.foot-tag em{font-weight:300;font-style:italic;color:var(--paxr-jade);}
+.foot-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;font-size:12px;}
+.foot-meta h6{font-family:var(--f-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--paxr-mist-2);margin-bottom:12px;font-weight:500;}
+.foot-meta p{color:rgba(246,245,241,0.75);line-height:1.6;}
+.foot-meta .mono{color:var(--paxr-jade);font-size:13px;}
+.foot-rule{border-top:1px solid rgba(246,245,241,0.1);padding-top:24px;display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:rgba(246,245,241,0.4);letter-spacing:0.12em;text-transform:uppercase;}
+
+/* Responsive */
+@media(max-width:920px){
+  .hero-head,.block-head,.spec-grid,.code-wrap,.foot-hero{grid-template-columns:1fr;gap:40px;}
+  .palette,.logo-grid{grid-template-columns:1fr 1fr;}
+  .donts,.screens{grid-template-columns:1fr;}
+  .comp-row,.type-row{grid-template-columns:1fr;gap:24px;}
+  .voice-grid{grid-template-columns:1fr;}
+  .radii{grid-template-columns:repeat(3,1fr);}
+  .wrap,.nav-inner,.hero-wrap,.block-head,.palette,.usage-bar,.type-stack,.scale-table,.spec-grid,.logo-grid,.donts,.comp-section,.code-wrap,.voice-grid,.screens,.foot-wrap{padding-left:24px;padding-right:24px;}
+  .sp-display{font-size:64px;}
+  .hero{padding:60px 0 80px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">pax<span>r</span></div>
+    <div class="nav-links">
+      <a href="#foundations" class="nav-link">Foundations</a>
+      <a href="#logo" class="nav-link">Logo</a>
+      <a href="#components" class="nav-link">Components</a>
+      <a href="#patterns" class="nav-link">Patterns</a>
+      <a href="#voice" class="nav-link">Voice</a>
+      <a href="#screens" class="nav-link">Screens</a>
+    </div>
+    <div class="nav-meta">
+      <span>v1.0</span>
+      <span>·</span>
+      <span>Status <b>Live</b></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <!-- Mark in corner -->
+  <svg class="hero-mark" width="220" height="220" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+    <path d="M 50 8 A 42 42 0 1 0 78 18" stroke="#F6F5F1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <circle cx="78" cy="18" r="5" fill="#3EC99A"/>
+  </svg>
+  <div class="hero-wrap">
+    <div class="hero-eyebrow">Design system · v1.0</div>
+    <div class="hero-head">
+      <div>
+        <h1>Peace,<br><em>handled.</em></h1>
+      </div>
+      <div class="hero-side">
+        <div class="hero-tagline">The visual language of an AI warranty agent. Built so the product feels like locking your front door — settled, certain, handled.</div>
+        <div class="hero-meta">
+          <div class="hero-meta-cell"><div class="k">Product</div><div class="v">Paxr</div></div>
+          <div class="hero-meta-cell"><div class="k">Domain</div><div class="v">getpaxr.com</div></div>
+          <div class="hero-meta-cell"><div class="k">System</div><div class="v">v1.0 · Apr 2026</div></div>
+          <div class="hero-meta-cell"><div class="k">Stack</div><div class="v">Expo · Next.js</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── FOUNDATIONS · COLOUR ── -->
+<section class="block" id="foundations">
+  <div class="block-head">
+    <div>
+      <div class="block-num">01 — Colour</div>
+      <h2 class="h-section">A palette of <em class="serif">resolution</em>,<br>not decoration.</h2>
+    </div>
+    <p class="lead">Deep is the voice. Stone is the room. Jade is reserved for one thing: the moment something is handled. Never decorative, never more than one jade element per screen.</p>
+  </div>
+
+  <div class="palette">
+    <div class="swatch feature" style="background:#0E1B29;">
+      <div class="swatch-chip" style="background:#0E1B29;color:#F6F5F1;">
+        <div style="margin-top:auto;">
+          <div class="chip-label" style="color:#F6F5F1;">Paxr Deep</div>
+          <div style="font-family:var(--f-mono);font-size:12px;color:rgba(246,245,241,0.5);margin-top:8px;letter-spacing:0.04em;">#0E1B29 · rgb(14 27 41)</div>
+        </div>
+      </div>
+      <div class="swatch-body" style="background:#0E1B29;">
+        <div class="sw-role" style="color:rgba(246,245,241,0.65);">Primary dark. All dark UI. Text on light. The voice of the product.</div>
+      </div>
+    </div>
+    <div class="swatch feature" style="background:#3EC99A;">
+      <div class="swatch-chip" style="background:#3EC99A;color:#0E1B29;">
+        <div style="margin-top:auto;">
+          <div class="chip-label" style="color:#0E1B29;">Paxr Jade</div>
+          <div style="font-family:var(--f-mono);font-size:12px;color:rgba(14,27,41,0.6);margin-top:8px;letter-spacing:0.04em;">#3EC99A · rgb(62 201 154)</div>
+        </div>
+      </div>
+      <div class="swatch-body" style="background:#3EC99A;">
+        <div class="sw-role" style="color:rgba(14,27,41,0.75);">Resolution only. CTAs, confirmations, active status. One element per screen — maximum.</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-chip" style="background:#F6F5F1;border-bottom:1px solid var(--paxr-line);"></div>
+      <div class="swatch-body">
+        <div class="sw-name">Paxr Stone</div>
+        <div class="sw-hex">#F6F5F1</div>
+        <div class="sw-role">App background. Warm, never pure white.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background:#EAE9E4;"></div>
+      <div class="swatch-body">
+        <div class="sw-name">Paxr Pale</div>
+        <div class="sw-hex">#EAE9E4</div>
+        <div class="sw-role">Dividers, subtle borders, card surfaces on light.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background:#1C2E40;"></div>
+      <div class="swatch-body">
+        <div class="sw-name">Paxr Depth</div>
+        <div class="sw-hex">#1C2E40</div>
+        <div class="sw-role">Card surfaces on dark UI. One level lighter than Deep.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background:#8FA3B1;"></div>
+      <div class="swatch-body">
+        <div class="sw-name">Paxr Mist</div>
+        <div class="sw-hex">#8FA3B1</div>
+        <div class="sw-role">Secondary text, labels, metadata. Never primary.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background:#E8A020;"></div>
+      <div class="swatch-body">
+        <div class="sw-name">Paxr Amber</div>
+        <div class="sw-hex">#E8A020</div>
+        <div class="sw-role">Expiry warnings only. Never decorative.</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-chip" style="background:#C0392B;"></div>
+      <div class="swatch-body">
+        <div class="sw-name">Paxr Error</div>
+        <div class="sw-hex">#C0392B</div>
+        <div class="sw-role">Expired, errors, destructive actions only.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="usage-bar">
+    <div class="usage-rule"><b>Jade is sacred</b>One jade element per screen, maximum. Used on resolution, not anywhere a link might be hovered.</div>
+    <div class="usage-rule"><b>Never pure white</b>Stone is warm. A stark #FFF next to it reads as a bug, not a surface. Cards lift through hairlines instead.</div>
+    <div class="usage-rule"><b>No gradients, ever</b>Depth is built from adjacent flats — Deep beside Depth, Stone beside Pale. Colour fades are a tell.</div>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-card">
+      <div class="label">CSS custom properties</div>
+      <button class="copy" onclick="copyMe(this,'css-tokens')">Copy</button>
+<pre id="css-tokens">:root {
+  --paxr-deep:    #0E1B29;
+  --paxr-depth:   #1C2E40;
+  --paxr-jade:    #3EC99A;
+  --paxr-jade-dim:#2D9A76;
+  --paxr-stone:   #F6F5F1;
+  --paxr-pale:    #EAE9E4;
+  --paxr-mist:    #8FA3B1;
+  --paxr-amber:   #E8A020;
+  --paxr-error:   #C0392B;
+}</pre>
+    </div>
+    <div class="code-card light">
+      <div class="label">Tailwind config</div>
+      <button class="copy" onclick="copyMe(this,'tw-tokens')">Copy</button>
+<pre id="tw-tokens">colors: {
+  paxr: {
+    deep:    '#0E1B29',
+    depth:   '#1C2E40',
+    jade:    '#3EC99A',
+    'jade-dim': '#2D9A76',
+    stone:   '#F6F5F1',
+    pale:    '#EAE9E4',
+    mist:    '#8FA3B1',
+    amber:   '#E8A020',
+    error:   '#C0392B',
+  }
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOUNDATIONS · TYPOGRAPHY ── -->
+<section class="block">
+  <div class="block-head">
+    <div>
+      <div class="block-num">02 — Typography</div>
+      <h2 class="h-section">Serif for the <em class="serif">feeling</em>.<br>Sans for the work.</h2>
+    </div>
+    <p class="lead">Fraunces carries weight and warmth — it says peace. DM Sans does the heavy lifting in UI. Courier Prime handles the things that must be exact: dates, codes, receipts.</p>
+  </div>
+
+  <div class="type-stack">
+    <div class="type-row">
+      <div class="type-meta">
+        <b>Display · Hero</b>
+        Fraunces<br>Weight 900<br>
+        <span class="m">56–160px</span>
+      </div>
+      <div class="type-specimen">
+        <div class="sp-display">Peace, <em>handled.</em></div>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <b>Section heading</b>
+        Fraunces<br>Weight 600<br>
+        <span class="m">28–48px</span>
+      </div>
+      <div class="type-specimen">
+        <div class="sp-section">Your <em class="serif">Hoover</em> washer warranty expires in 23 days.</div>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <b>Agent voice</b>
+        Fraunces<br>Weight 300 italic<br>
+        <span class="m">18–24px</span>
+      </div>
+      <div class="type-specimen">
+        <div class="sp-agent">A two-year extension is £29. Want me to handle it?</div>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <b>Body / Interface</b>
+        DM Sans<br>Weight 400<br>
+        <span class="m">14–16px</span>
+      </div>
+      <div class="type-specimen">
+        <div class="sp-body">All body copy, form fields, navigation, and long-form text. DM Sans reads clean at small sizes and stays quiet — the serif does the talking when it needs to.</div>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <b>UI Label</b>
+        DM Sans<br>Weight 500<br>
+        <span class="m">11–14px</span>
+      </div>
+      <div class="type-specimen">
+        <div class="sp-label">Active · Expiring soon · Expired · Claimed</div>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <b>Technical data</b>
+        JetBrains Mono<br>Weight 400<br>
+        <span class="m">12–14px</span>
+      </div>
+      <div class="type-specimen">
+        <div class="sp-mono">SN-4492-8821-A · Covered until 14 Nov 2027 · £29.00 GBP</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scale-table">
+    <table>
+      <thead><tr><th>Token</th><th>Specimen</th><th>Size · weight</th></tr></thead>
+      <tbody>
+        <tr><td>--t-hero</td><td style="font-family:var(--f-display);font-weight:900;font-size:42px;letter-spacing:-0.03em;">Peace.</td><td>clamp(48px, 8vw, 128px) · 900</td></tr>
+        <tr><td>--t-display</td><td style="font-family:var(--f-display);font-weight:600;font-size:32px;letter-spacing:-0.02em;">Your vault is empty.</td><td>44–56px · 600</td></tr>
+        <tr><td>--t-section</td><td style="font-family:var(--f-display);font-weight:600;font-size:26px;">Active warranties</td><td>28–36px · 600</td></tr>
+        <tr><td>--t-lead</td><td style="font-size:18px;">Scan a QR code to register a product.</td><td>18–20px · 400</td></tr>
+        <tr><td>--t-body</td><td style="font-size:15px;">Your Hoover washing machine is covered until November 2027.</td><td>14–16px · 400</td></tr>
+        <tr><td>--t-label</td><td style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:500;">Expiring soon</td><td>10–12px · 500 · 0.18em</td></tr>
+        <tr><td>--t-mono</td><td style="font-family:var(--f-mono);font-size:13px;">£29.00 · 14 Nov 27</td><td>12–14px · mono 400</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── FOUNDATIONS · SPACING ── -->
+<section class="block" style="background:var(--paxr-pale);">
+  <div class="block-head">
+    <div>
+      <div class="block-num">03 — Spacing & radii</div>
+      <h2 class="h-section">8pt grid. <em class="serif">No exceptions.</em></h2>
+    </div>
+    <p class="lead">The product feels calm because nothing is 7 or 13 or 19 pixels. Every value below is a multiple of 4, scaled to what's useful — no more granular than that.</p>
+  </div>
+
+  <div class="spec-grid">
+    <div class="spec-col">
+      <h4>Spacing scale</h4>
+      <div class="spacing-rows">
+        <div class="spacing-row"><span class="k">--s-1</span><div class="spacing-bar" style="width:4px;"></div><span class="v">4px</span></div>
+        <div class="spacing-row"><span class="k">--s-2</span><div class="spacing-bar" style="width:8px;"></div><span class="v">8px</span></div>
+        <div class="spacing-row"><span class="k">--s-3</span><div class="spacing-bar" style="width:12px;"></div><span class="v">12px</span></div>
+        <div class="spacing-row"><span class="k">--s-4</span><div class="spacing-bar" style="width:16px;"></div><span class="v">16px</span></div>
+        <div class="spacing-row"><span class="k">--s-6</span><div class="spacing-bar" style="width:24px;"></div><span class="v">24px</span></div>
+        <div class="spacing-row"><span class="k">--s-8</span><div class="spacing-bar" style="width:32px;"></div><span class="v">32px</span></div>
+        <div class="spacing-row"><span class="k">--s-12</span><div class="spacing-bar" style="width:48px;"></div><span class="v">48px</span></div>
+        <div class="spacing-row"><span class="k">--s-16</span><div class="spacing-bar" style="width:64px;"></div><span class="v">64px</span></div>
+        <div class="spacing-row"><span class="k">--s-24</span><div class="spacing-bar" style="width:96px;"></div><span class="v">96px</span></div>
+      </div>
+    </div>
+
+    <div class="spec-col">
+      <h4>Radii</h4>
+      <div class="radii">
+        <div class="radius-cell" style="border-radius:6px;"><span class="r">sm</span><span class="v">6px</span></div>
+        <div class="radius-cell" style="border-radius:8px;"><span class="r">md</span><span class="v">8px</span></div>
+        <div class="radius-cell" style="border-radius:12px;"><span class="r">lg</span><span class="v">12px</span></div>
+        <div class="radius-cell" style="border-radius:20px;"><span class="r">xl</span><span class="v">20px</span></div>
+        <div class="radius-cell" style="border-radius:9999px;"><span class="r">full</span><span class="v">9999</span></div>
+      </div>
+
+      <h4 style="margin-top:40px;">Layout targets</h4>
+      <table style="width:100%;font-size:13px;">
+        <tr><td style="padding:8px 0;border-bottom:1px solid var(--paxr-line);">Mobile frame</td><td style="font-family:var(--f-mono);text-align:right;border-bottom:1px solid var(--paxr-line);">393 × 852</td></tr>
+        <tr><td style="padding:8px 0;border-bottom:1px solid var(--paxr-line);">Side margin</td><td style="font-family:var(--f-mono);text-align:right;border-bottom:1px solid var(--paxr-line);">20px</td></tr>
+        <tr><td style="padding:8px 0;border-bottom:1px solid var(--paxr-line);">Touch target</td><td style="font-family:var(--f-mono);text-align:right;border-bottom:1px solid var(--paxr-line);">≥ 44px</td></tr>
+        <tr><td style="padding:8px 0;border-bottom:1px solid var(--paxr-line);">Web max width</td><td style="font-family:var(--f-mono);text-align:right;border-bottom:1px solid var(--paxr-line);">1100px</td></tr>
+        <tr><td style="padding:8px 0;">Reading measure</td><td style="font-family:var(--f-mono);text-align:right;">640px</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── LOGO ── -->
+<section class="block dark" id="logo">
+  <div class="block-head">
+    <div>
+      <div class="block-num">04 — Logo & mark</div>
+      <h2 class="h-section" style="color:var(--paxr-stone);">The wordmark is always <em class="serif" style="color:var(--paxr-jade);">lowercase</em>.</h2>
+    </div>
+    <p class="lead" style="color:rgba(246,245,241,0.7);">Paxr is never Paxr or PAXR in the mark. Lowercase reads as quiet confidence — the brand doesn't need to shout its own name. The symbol mark is a near-complete circle with a jade dot closing it: the moment of resolution.</p>
+  </div>
+
+  <div class="logo-grid">
+    <div class="logo-cell">
+      <div class="logo-stage">
+        <div class="wm big">pax<span class="dot">r</span></div>
+      </div>
+      <div class="logo-caption"><span>Wordmark · Stone</span><span>Primary</span></div>
+    </div>
+    <div class="logo-cell dark">
+      <div class="logo-stage">
+        <div class="wm big light">pax<span class="dot">r</span></div>
+      </div>
+      <div class="logo-caption"><span>Wordmark · Deep</span><span>On dark</span></div>
+    </div>
+    <div class="logo-cell">
+      <div class="logo-stage">
+        <svg width="120" height="120" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M 50 8 A 42 42 0 1 0 78 18" stroke="#0E1B29" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="78" cy="18" r="5.5" fill="#3EC99A"/>
+        </svg>
+      </div>
+      <div class="logo-caption"><span>Symbol mark</span><span>Arc + dot</span></div>
+    </div>
+
+    <div class="logo-cell">
+      <div class="logo-stage">
+        <div class="wm-inline">
+          <div class="wm med">pax<span class="dot">r</span></div>
+          <div class="tag">peace, handled.</div>
+        </div>
+      </div>
+      <div class="logo-caption"><span>Horizontal lockup</span><span>Mark + tagline</span></div>
+    </div>
+    <div class="logo-cell dark">
+      <div class="logo-stage mark-stage">
+        <svg width="72" height="72" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M 50 8 A 42 42 0 1 0 78 18" stroke="#F6F5F1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="78" cy="18" r="5.5" fill="#3EC99A"/>
+        </svg>
+        <div class="wm med light">pax<span class="dot">r</span></div>
+      </div>
+      <div class="logo-caption"><span>Full lockup · Deep</span><span>Mark + wordmark</span></div>
+    </div>
+    <div class="logo-cell">
+      <div class="logo-stage" style="background:var(--paxr-deep);border-radius:var(--r-xl);aspect-ratio:1;width:140px;flex:none;display:flex;align-items:center;justify-content:center;margin:auto;">
+        <svg width="70" height="70" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M 50 8 A 42 42 0 1 0 78 18" stroke="#F6F5F1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="78" cy="18" r="5.5" fill="#3EC99A"/>
+        </svg>
+      </div>
+      <div class="logo-caption"><span>App icon</span><span>1024 master</span></div>
+    </div>
+  </div>
+
+  <div class="donts" style="margin-top:40px;">
+    <div class="dont-cell" style="background:var(--paxr-depth);border-color:rgba(246,245,241,0.08);">
+      <div class="x">✗</div>
+      <div class="preview" style="color:var(--paxr-stone);font-size:44px;">Paxr</div>
+      <div class="label" style="color:var(--paxr-mist-2);">Don't capitalise — lowercase is the brand</div>
+    </div>
+    <div class="dont-cell" style="background:var(--paxr-depth);border-color:rgba(246,245,241,0.08);">
+      <div class="x">✗</div>
+      <div class="preview" style="color:var(--paxr-stone);font-size:34px;letter-spacing:0.12em;">P A X R</div>
+      <div class="label" style="color:var(--paxr-mist-2);">Don't letterspace — defeats the mark</div>
+    </div>
+    <div class="dont-cell" style="background:var(--paxr-depth);border-color:rgba(246,245,241,0.08);">
+      <div class="x">✗</div>
+      <div class="preview" style="font-family:var(--f-body);font-weight:700;color:var(--paxr-stone);font-size:42px;">paxr</div>
+      <div class="label" style="color:var(--paxr-mist-2);">Don't set in sans — Fraunces carries the brand</div>
+    </div>
+    <div class="dont-cell" style="background:var(--paxr-depth);border-color:rgba(246,245,241,0.08);">
+      <div class="x">✗</div>
+      <div class="preview"><div class="wm med" style="background:linear-gradient(135deg,#3EC99A,#E8A020);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">paxr</div></div>
+      <div class="label" style="color:var(--paxr-mist-2);">No gradients, no rainbow treatments</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPONENTS ── -->
+<section class="block" id="components">
+  <div class="block-head">
+    <div>
+      <div class="block-num">05 — Components</div>
+      <h2 class="h-section">The <em class="serif">small pieces</em> that<br>carry the whole thing.</h2>
+    </div>
+    <p class="lead">Every component exists for a specific moment in the warranty lifecycle. Nothing is decorative. Hover the primary buttons to see motion — every transition uses the same easing curve.</p>
+  </div>
+
+  <div class="comp-section">
+
+    <!-- Buttons -->
+    <div class="comp-row">
+      <div class="comp-aside">
+        <h4>Buttons</h4>
+        <p>Three flavours. Jade is always the resolution action — "Scan", "Renew", "Done". Deep is secondary. Ghost is tertiary, used for less-urgent options.</p>
+        <div class="specs">
+          <span>Padding · 14px 22px</span>
+          <span>Radius · 8px</span>
+          <span>Weight · DM Sans 500</span>
+          <span>Lift on hover · 1px</span>
+        </div>
+      </div>
+      <div class="comp-stage">
+        <button class="btn btn-primary">Scan QR code <span class="arrow">→</span></button>
+        <button class="btn btn-secondary">Add manually</button>
+        <button class="btn btn-ghost">View warranty</button>
+        <button class="btn btn-primary btn-sm">Renew</button>
+        <button class="btn btn-text">Skip for now</button>
+        <button class="btn btn-primary btn-disabled" disabled>Uploading…</button>
+      </div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-aside">
+        <h4>Buttons · dark surface</h4>
+        <p>On Paxr Deep backgrounds, the primary button stays jade (still the one moment of resolution). Ghost inverts to a stone outline.</p>
+        <div class="specs">
+          <span>Jade text stays Deep</span>
+          <span>Ghost border · 1.5px stone</span>
+        </div>
+      </div>
+      <div class="comp-stage dark">
+        <button class="btn btn-primary">Scan QR code <span class="arrow">→</span></button>
+        <button class="btn btn-ghost on-dark">Add manually</button>
+        <button class="btn btn-text on-dark">Skip for now</button>
+      </div>
+    </div>
+
+    <!-- Status badges -->
+    <div class="comp-row">
+      <div class="comp-aside">
+        <h4>Status badges</h4>
+        <p>Four states, one per warranty. Always rendered with a leading dot so they read as system status at a glance — not free-floating colour.</p>
+        <div class="specs">
+          <span>Radius · full pill</span>
+          <span>Size · 10.5px · 0.14em tracking</span>
+          <span>Dot · 6px semantic colour</span>
+        </div>
+      </div>
+      <div class="comp-stage">
+        <span class="badge active">Active</span>
+        <span class="badge expiring">Expiring soon</span>
+        <span class="badge expired">Expired</span>
+        <span class="badge claimed">Claimed</span>
+      </div>
+    </div>
+
+    <!-- Inputs -->
+    <div class="comp-row">
+      <div class="comp-aside">
+        <h4>Form inputs</h4>
+        <p>White face on Stone. Hairline border. Focus raises the border to Deep — a jade focus ring appears only when the field is accepting a "resolution" input (e.g. last step of registration).</p>
+        <div class="specs">
+          <span>Border · 1px Pale</span>
+          <span>Focus · Deep, 3px jade ring optional</span>
+          <span>Height · 48px</span>
+        </div>
+      </div>
+      <div class="comp-stage align-start">
+        <div class="input-field">
+          <label>Product name</label>
+          <input type="text" placeholder="e.g. Hoover washer" value="Hoover H-Wash 500">
+          <span class="hint">As shown on the product.</span>
+        </div>
+        <div class="input-field">
+          <label>Serial number</label>
+          <input type="text" style="font-family:var(--f-mono);" value="SN-4492-8821-A" class="with-ring">
+          <span class="hint">Usually on the back or inside the door.</span>
+        </div>
+        <div class="input-field error">
+          <label>Purchase date</label>
+          <input type="text" value="2015-04-31">
+          <span class="hint">That date doesn't exist. Try again.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat bubbles -->
+    <div class="comp-row">
+      <div class="comp-aside">
+        <h4>Agent chat bubbles</h4>
+        <p>Paxr speaks in Deep with Stone text — the voice is low and steady. The user replies in Jade — the action is theirs. Tail corners are 4px to read as "pinned" speakers.</p>
+        <div class="specs">
+          <span>Paxr · radius 4·14·14·14</span>
+          <span>User · radius 14·4·14·14</span>
+          <span>Max width · 86% · 14px body</span>
+        </div>
+      </div>
+      <div class="comp-stage pale align-start">
+        <div class="chat-stage">
+          <div class="bubble paxr">Your Hoover washer warranty expires in <span class="mono-inline">23 days</span>. A 2-year extension is £29. Want me to handle it?</div>
+          <div class="bubble user">Yes.</div>
+          <div class="bubble paxr">Done. Covered until <span class="mono-inline">14 Nov 2027</span>. Certificate emailed.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="comp-row">
+      <div class="comp-aside">
+        <h4>Notifications</h4>
+        <p>A single block for in-app toasts and WhatsApp messages. Icon tile uses soft semantic fill — never the saturated hex directly. Copy stays short.</p>
+        <div class="specs">
+          <span>Radius · 12px</span>
+          <span>Icon · 36×36 soft fill</span>
+          <span>Body · 13px, title 14px</span>
+        </div>
+      </div>
+      <div class="comp-stage column pale">
+        <div class="notif success">
+          <div class="notif-icon">✓</div>
+          <div class="notif-body">
+            <div class="notif-title">Warranty registered.</div>
+            <p>Your Hoover H-Wash 500 is covered until November 2027.</p>
+            <div class="notif-time">Just now</div>
+          </div>
+        </div>
+        <div class="notif warn">
+          <div class="notif-icon">!</div>
+          <div class="notif-body">
+            <div class="notif-title">Expires in 23 days.</div>
+            <p>Renew your Hoover warranty for £29, or let it lapse.</p>
+            <div class="notif-time">Today · 09:12</div>
+          </div>
+        </div>
+        <div class="notif err">
+          <div class="notif-icon">×</div>
+          <div class="notif-body">
+            <div class="notif-title">QR code not recognised.</div>
+            <p>Try better light, or add the warranty manually instead.</p>
+            <div class="notif-time">A minute ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PATTERNS · WARRANTY CARDS ── -->
+<section class="block" id="patterns" style="background:var(--paxr-pale);">
+  <div class="block-head">
+    <div>
+      <div class="block-num">06 — Patterns</div>
+      <h2 class="h-section">The warranty card<br>is the whole <em class="serif">product</em>.</h2>
+    </div>
+    <p class="lead">Everything else arranges around this component. Three states: active (jade), expiring (amber), expired (red). The top border carries the state. The count is mono — it's data, not decoration.</p>
+  </div>
+
+  <div class="comp-section">
+    <div class="comp-row" style="padding-top:8px;">
+      <div class="comp-aside">
+        <h4>Warranty card · three states</h4>
+        <p>One card. Three moods. The countdown is the only thing that changes colour — the brand stays consistent, the status doesn't shout.</p>
+        <div class="specs">
+          <span>Width · 260px mobile scroll</span>
+          <span>Top border · 3px semantic</span>
+          <span>Count · Courier 32px</span>
+          <span>Padding · 20×22</span>
+        </div>
+      </div>
+      <div class="comp-stage align-start" style="gap:16px;background:#fff;">
+        <div class="wcard">
+          <div class="brand">Hoover</div>
+          <div class="product">H-Wash 500 washing machine</div>
+          <div class="countdown"><span class="days">412</span><span class="unit">days left</span></div>
+          <div class="foot">
+            <span class="badge active">Active</span>
+            <span class="date">Nov 2027</span>
+          </div>
+        </div>
+        <div class="wcard expiring">
+          <div class="brand">Sony</div>
+          <div class="product">Bravia A80L OLED</div>
+          <div class="countdown"><span class="days">23</span><span class="unit">days left</span></div>
+          <div class="foot">
+            <span class="badge expiring">Expiring</span>
+            <span class="date">12 May 2026</span>
+          </div>
+        </div>
+        <div class="wcard expired">
+          <div class="brand">Dyson</div>
+          <div class="product">V11 cordless</div>
+          <div class="countdown"><span class="days">0</span><span class="unit">expired</span></div>
+          <div class="foot">
+            <span class="badge expired">Expired</span>
+            <span class="date">04 Apr 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-row">
+      <div class="comp-aside">
+        <h4>Anatomy</h4>
+        <p>Every element of the card earns its place. There is no "secondary" info — if a field isn't on the card, it lives on the detail screen.</p>
+        <div class="specs">
+          <span>① Brand · label caps</span>
+          <span>② Product · Fraunces 600</span>
+          <span>③ Countdown · mono big</span>
+          <span>④ Status badge · pill</span>
+        </div>
+      </div>
+      <div class="comp-stage" style="background:#fff;">
+        <div style="position:relative;">
+          <div class="wcard">
+            <div class="brand">Hoover</div>
+            <div class="product">H-Wash 500 washing machine</div>
+            <div class="countdown"><span class="days">412</span><span class="unit">days left</span></div>
+            <div class="foot">
+              <span class="badge active">Active</span>
+              <span class="date">Nov 2027</span>
+            </div>
+          </div>
+          <!-- Annotations -->
+          <div style="position:absolute;top:22px;right:-60px;display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:10px;color:var(--paxr-mist);letter-spacing:0.14em;"><span style="width:40px;height:1px;background:var(--paxr-mist);"></span>① BRAND</div>
+          <div style="position:absolute;top:60px;right:-82px;display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:10px;color:var(--paxr-mist);letter-spacing:0.14em;"><span style="width:40px;height:1px;background:var(--paxr-mist);"></span>② PRODUCT</div>
+          <div style="position:absolute;top:128px;right:-90px;display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:10px;color:var(--paxr-mist);letter-spacing:0.14em;"><span style="width:40px;height:1px;background:var(--paxr-mist);"></span>③ COUNTDOWN</div>
+          <div style="position:absolute;bottom:22px;right:-78px;display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:10px;color:var(--paxr-mist);letter-spacing:0.14em;"><span style="width:40px;height:1px;background:var(--paxr-mist);"></span>④ STATUS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VOICE ── -->
+<section class="block" id="voice">
+  <div class="block-head">
+    <div>
+      <div class="block-num">07 — Voice</div>
+      <h2 class="h-section">Write like a <em class="serif">competent friend</em>,<br>never a helpful robot.</h2>
+    </div>
+    <p class="lead">Paxr's voice is short, steady, and already handled. No exclamation marks, no emojis in the app, no passive voice, no apology. The agent doesn't get excited — it gets things done.</p>
+  </div>
+
+  <div class="voice-grid">
+    <div class="voice-col left">
+      <h5>✓ Write like this</h5>
+      <div class="voice-item">
+        <div class="m">1</div>
+        <div class="body"><b>Confirmation</b><div class="ex">Done. Covered until Nov 2027.</div><div class="note">Past tense. Period, not exclamation.</div></div>
+      </div>
+      <div class="voice-item">
+        <div class="m">2</div>
+        <div class="body"><b>Warning</b><div class="ex">Expires in 23 days. Renew?</div><div class="note">Fact, then question. No pressure.</div></div>
+      </div>
+      <div class="voice-item">
+        <div class="m">3</div>
+        <div class="body"><b>Empty state</b><div class="ex">No warranties yet. Scan a product to start.</div></div>
+      </div>
+      <div class="voice-item">
+        <div class="m">4</div>
+        <div class="body"><b>Error</b><div class="ex">QR code not recognised. Add manually instead.</div><div class="note">Name the problem, offer the exit.</div></div>
+      </div>
+      <div class="voice-item">
+        <div class="m">5</div>
+        <div class="body"><b>CTA</b><div class="ex">Scan QR code · Renew now · View warranty</div><div class="note">Verb + object. No "Click here".</div></div>
+      </div>
+    </div>
+    <div class="voice-col right">
+      <h5>✗ Never write like this</h5>
+      <div class="voice-item">
+        <div class="m">1</div>
+        <div class="body"><b>No exclamations</b><div class="ex">Warranty registered!</div><div class="note">The product is calm. Punctuation should be too.</div></div>
+      </div>
+      <div class="voice-item">
+        <div class="m">2</div>
+        <div class="body"><b>No passive voice</b><div class="ex">Your warranty has been successfully registered.</div><div class="note">→ "Registered."</div></div>
+      </div>
+      <div class="voice-item">
+        <div class="m">3</div>
+        <div class="body"><b>No jargon</b><div class="ex">Initiate warranty registration process.</div></div>
+      </div>
+      <div class="voice-item">
+        <div class="m">4</div>
+        <div class="body"><b>No emojis in product UI</b><div class="ex">Hi there! 👋 Just a quick reminder…</div><div class="note">Emojis undo the whole premise.</div></div>
+      </div>
+      <div class="voice-item">
+        <div class="m">5</div>
+        <div class="body"><b>No filler</b><div class="ex">We just wanted to let you know that…</div><div class="note">Say the thing. Leave.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SCREENS ── -->
+<section class="block dark" id="screens">
+  <div class="block-head">
+    <div>
+      <div class="block-num">08 — Screens</div>
+      <h2 class="h-section" style="color:var(--paxr-stone);">The <em class="serif" style="color:var(--paxr-jade);">system</em> applied.</h2>
+    </div>
+    <p class="lead" style="color:rgba(246,245,241,0.7);">Four canonical screens show how every token, component, and voice rule lands in the actual product. Each screen is pixel-accurate to the 393×852 iPhone frame.</p>
+  </div>
+
+  <div class="screens">
+    <!-- VAULT -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="notch"></div>
+          <div class="status-bar">
+            <span class="mono">9:41</span>
+            <div class="dots"><i></i><i></i><i style="width:18px;height:7px;border-radius:2px;"></i></div>
+          </div>
+          <div class="app-head">
+            <div class="wm" style="font-size:22px;">pax<span class="dot">r</span></div>
+            <div class="avatar">E</div>
+          </div>
+          <div class="summary"><b>14 warranties</b> · 2 expiring soon</div>
+
+          <div class="vault-sec">
+            <div class="sh"><span class="t j">● Active</span><span class="c">12</span></div>
+            <div class="vault-scroll">
+              <div class="mini-card">
+                <div class="b">Hoover</div>
+                <div class="p">H-Wash 500</div>
+                <div class="d">412</div>
+                <div class="u">days left</div>
+              </div>
+              <div class="mini-card">
+                <div class="b">Apple</div>
+                <div class="p">MacBook Pro 14"</div>
+                <div class="d">298</div>
+                <div class="u">days left</div>
+              </div>
+              <div class="mini-card">
+                <div class="b">Bosch</div>
+                <div class="p">Series 6</div>
+                <div class="d">186</div>
+                <div class="u">days left</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="vault-sec">
+            <div class="sh"><span class="t a">● Expiring soon</span><span class="c">2</span></div>
+            <div class="vault-scroll">
+              <div class="mini-card a">
+                <div class="b">Sony</div>
+                <div class="p">Bravia A80L</div>
+                <div class="d">23</div>
+                <div class="u">days left</div>
+              </div>
+              <div class="mini-card a">
+                <div class="b">Philips</div>
+                <div class="p">Airfryer XXL</div>
+                <div class="d">11</div>
+                <div class="u">days left</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-bar">
+            <div class="tab active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 10h16"/></svg>
+              <span>Vault</span>
+            </div>
+            <div class="tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
+              <span>Agent</span>
+            </div>
+            <div class="tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="9" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+              <span>Profile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-caption">
+        <div class="n">Screen 01</div>
+        <div class="t" style="color:var(--paxr-stone);">Vault dashboard</div>
+      </div>
+    </div>
+
+    <!-- QR SCAN -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen dark">
+          <div class="notch"></div>
+          <div class="scan-stage">
+            <div class="scan-close">×</div>
+            <div class="scan-title">Scan warranty</div>
+            <div class="scan-frame"><div class="scan-corner"></div></div>
+            <div class="scan-hint">Point at the QR code in the box or on the manual.</div>
+            <div class="scan-alt">Add manually instead</div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-caption">
+        <div class="n">Screen 02</div>
+        <div class="t" style="color:var(--paxr-stone);">QR scan</div>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="notch"></div>
+          <div class="status-bar">
+            <span class="mono">9:41</span>
+            <div class="dots"><i></i><i></i><i style="width:18px;height:7px;border-radius:2px;"></i></div>
+          </div>
+          <div class="app-head">
+            <div class="wm" style="font-size:22px;">pax<span class="dot">r</span></div>
+            <div class="avatar">E</div>
+          </div>
+          <div class="empty-body">
+            <svg class="mark" width="64" height="64" viewBox="0 0 100 100" fill="none">
+              <path d="M 50 8 A 42 42 0 1 0 78 18" stroke="#0E1B29" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="78" cy="18" r="5.5" fill="#3EC99A"/>
+            </svg>
+            <div class="eh">Your vault is empty.</div>
+            <div class="es">Scan a QR code or add a product to get started.</div>
+          </div>
+          <div class="empty-cta">
+            <button class="btn btn-primary">Scan QR code <span class="arrow">→</span></button>
+            <button class="btn btn-ghost">Add manually</button>
+          </div>
+          <div class="tab-bar">
+            <div class="tab active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 10h16"/></svg>
+              <span>Vault</span>
+            </div>
+            <div class="tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
+              <span>Agent</span>
+            </div>
+            <div class="tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="9" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+              <span>Profile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-caption">
+        <div class="n">Screen 03</div>
+        <div class="t" style="color:var(--paxr-stone);">Empty vault</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second row — agent chat takes full width -->
+  <div style="max-width:var(--max);margin:80px auto 0;padding:0 40px;display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:center;">
+    <div class="phone" style="max-width:320px;margin:0;">
+      <div class="phone-screen">
+        <div class="notch"></div>
+        <div class="status-bar">
+          <span class="mono">9:41</span>
+          <div class="dots"><i></i><i></i><i style="width:18px;height:7px;border-radius:2px;"></i></div>
+        </div>
+        <div style="padding:12px 20px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--paxr-line);flex-shrink:0;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--paxr-jade);display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-weight:700;color:var(--paxr-deep);font-size:14px;">P</div>
+          <div style="min-width:0;">
+            <div style="font-family:var(--f-display);font-weight:600;font-size:15px;color:var(--paxr-deep);">Paxr</div>
+            <div style="font-size:11px;color:var(--paxr-jade-dim);">● Online · usually replies instantly</div>
+          </div>
+        </div>
+        <div class="agent-body" style="position:relative;">
+          <div class="agent-meta">Today · 09:12</div>
+          <div class="bubble paxr">Your Hoover H-Wash warranty expires in <span class="mono-inline">23 days</span>.</div>
+          <div class="bubble paxr">A 2-year extension is <span class="mono-inline">£29</span>. Want me to handle it?</div>
+          <div class="bubble user">Yes.</div>
+          <div class="bubble paxr">Done. Covered until <span class="mono-inline">Nov 2027</span>. Certificate emailed.</div>
+        </div>
+        <div class="agent-input">
+          <div class="f">Reply to Paxr</div>
+          <div class="send">↑</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="eyebrow on-dark" style="margin-bottom:20px;">Screen 04 · Agent chat</div>
+      <div class="h-sub serif" style="color:var(--paxr-stone);font-size:28px;font-weight:300;line-height:1.35;margin-bottom:24px;">"Your agent handles it."</div>
+      <p style="color:rgba(246,245,241,0.75);max-width:460px;line-height:1.6;font-size:15px;margin-bottom:32px;">The full WhatsApp renewal journey, rendered in the app. Paxr speaks in Deep bubbles. The user replies in Jade. Every date and price sits in Courier Prime — because warranty info should look like warranty info, not like marketing copy.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(246,245,241,0.1);border:1px solid rgba(246,245,241,0.1);max-width:460px;">
+        <div style="background:var(--paxr-deep);padding:14px 18px;">
+          <div style="font-family:var(--f-mono);font-size:10px;color:rgba(246,245,241,0.4);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:4px;">Avg. turn</div>
+          <div style="font-family:var(--f-mono);font-size:18px;color:var(--paxr-jade);">12s</div>
+        </div>
+        <div style="background:var(--paxr-deep);padding:14px 18px;">
+          <div style="font-family:var(--f-mono);font-size:10px;color:rgba(246,245,241,0.4);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:4px;">Bubbles</div>
+          <div style="font-family:var(--f-mono);font-size:18px;color:var(--paxr-stone);">2 variants</div>
+        </div>
+        <div style="background:var(--paxr-deep);padding:14px 18px;">
+          <div style="font-family:var(--f-mono);font-size:10px;color:rgba(246,245,241,0.4);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:4px;">Surfaces</div>
+          <div style="font-family:var(--f-mono);font-size:14px;color:var(--paxr-stone);">App · WhatsApp · Web</div>
+        </div>
+        <div style="background:var(--paxr-deep);padding:14px 18px;">
+          <div style="font-family:var(--f-mono);font-size:10px;color:rgba(246,245,241,0.4);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:4px;">Tone</div>
+          <div style="font-family:var(--f-display);font-style:italic;font-weight:300;font-size:15px;color:var(--paxr-stone);">already handled</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRINCIPLES FOOTER ── -->
+<footer>
+  <div class="foot-wrap">
+    <div class="foot-hero">
+      <div>
+        <div class="eyebrow on-dark" style="margin-bottom:24px;">Principles</div>
+        <div class="foot-tag">The app equivalent of <em>locking your front door</em>.</div>
+      </div>
+      <div class="foot-meta">
+        <div>
+          <h6>Five rules</h6>
+          <p>① Jade means resolved.<br>② Lowercase always.<br>③ No exclamations.<br>④ Facts before feelings.<br>⑤ Stone, never white.</p>
+        </div>
+        <div>
+          <h6>What it's not</h6>
+          <p>Not friendly. Not helpful-sounding. Not a dashboard. Not a reminder app. Not a chat UI looking for things to say.</p>
+        </div>
+        <div>
+          <h6>System</h6>
+          <p><span class="mono">v1.0</span><br><span class="mono">Apr 2026</span></p>
+        </div>
+        <div>
+          <h6>Product</h6>
+          <p><span class="mono">getpaxr.com</span><br>Expo · Next.js · WhatsApp</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot-rule">
+      <span>Paxr design system · v1.0</span>
+      <span>Peace, handled.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function copyMe(btn, id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText).then(()=>{
+    const prev = btn.innerText;
+    btn.innerText = 'Copied';
+    setTimeout(()=>{btn.innerText = prev;}, 1500);
+  });
+}
+
+// Auto-print when page is ready
+(async function(){
+  try {
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+  } catch(e){}
+  await new Promise(r => setTimeout(r, 500));
+  window.print();
+})();
+</script>
+</body>
+</html>
